@@ -3,23 +3,17 @@ html{
   padding: 0; 
 }
 body {
-  font-family: sans-serif;
+  font-family: 'Trebuchet MS', sans-serif; 
   margin: 0;
   padding: 0;
   font-size: 1.2em;
-  color: #000000;
-  background: repeating-linear-gradient(
-    45deg,
-    #ffffee,
-    #ffffee 2em,
-    #eeeeee 2em,
-    #eeeeee 4em
-  );
+  color: #ffffff;
+  background: #CCFF33;
 }
 .main-content {
   min-height: 100vh;
   padding: 1em;
-  background: #ffffff;
+  background: #232323;
   margin: 0 0 0 3em;
 }
 h1 {
@@ -29,14 +23,14 @@ p {
   margin: 1em 0;
 }
 a.button, input.button {
-  border: 1px solid #000000;
+  border: 1px solid #CCFF33;
   padding: 0.5em;
   margin: 0.5em;
-  border-radius: 0.25em;
+  border-radius: 0.25em;  
   text-decoration: none;
-  background-color: #ffffff;
-  color: #000000;
-  box-shadow: 5px 5px 5px #999999;
+  background-color: #232323;
+  color: #ffffff;
+  box-shadow: 5px 5px 5px #1a1a1a;
 }
 a.button:hover {
   background-color: #000000;
@@ -47,10 +41,11 @@ input {
   font-size: 100%;
 }
 input.button {
-  background-color: #99ff99;
+  background-color: #232323;
+  border: 3px solid #CCFF33;
 }
 table {
-  border: 1px solid #000000;
+  border: 1px solid #CCFF33;
   border-collapse: collapse;
   margin: 0 0 2em 0;
 }
@@ -61,4 +56,8 @@ table td, table th {
 }
 .spacer {
   margin: 3em 0;
+}
+a {
+  color: #CCFF33;
+}
 }

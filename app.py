@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 import os
 import sqlite3 as sql
 
 # app - The flask application where all the magical things are configured.
 app = Flask(__name__)
+app.secret_key='12345'
 
 # Constants - Stuff that we need to know that won't ever change!
 DATABASE_FILE = "database.db"
@@ -29,21 +30,32 @@ def create_buggy():
     elif request.method == 'POST':
         msg=""
         qty_wheels = request.form['qty_wheels']
-        try:
-            with sql.connect(DATABASE_FILE) as con:
-                cur = con.cursor()
-                cur.execute(
-                    "UPDATE buggies set qty_wheels=? WHERE id=?",
-                    (qty_wheels, DEFAULT_BUGGY_ID)
-                )
-                con.commit()
-                msg = "Record successfully saved"
-        except:
-            con.rollback()
-            msg = "error in update operation"
-        finally:
-            con.close()
-        return render_template("updated.html", msg = msg)
+        flag_color = request.form['flag_color']
+        ############### here #########################################################
+        error = None
+        
+        
+        if qty_wheels.isdigit() is False:
+            error = 'Incorrect type of data entered, please enter an integer.'
+            flash(error)
+            return render_template('buggy-form.html')
+            
+        else:
+            try:
+                with sql.connect(DATABASE_FILE) as con:
+                    cur = con.cursor()
+                    cur.execute(
+                        "UPDATE buggies set qty_wheels=?, flag_color=? WHERE id=?",
+                        (qty_wheels, flag_color, DEFAULT_BUGGY_ID)
+                    )
+                    con.commit()
+                    msg = "Record successfully saved"
+            except:
+                con.rollback()
+                msg = "error in update operation"
+            finally:
+                con.close()
+            return render_template("updated.html", msg = msg)
 
 #------------------------------------------------------------
 # a page for displaying the buggy
@@ -54,8 +66,15 @@ def show_buggies():
     con.row_factory = sql.Row
     cur = con.cursor()
     cur.execute("SELECT * FROM buggies")
-    record = cur.fetchone(); 
+    record = cur.fetchone();
     return render_template("buggy.html", buggy = record)
+
+#------------------------------------------------------------
+# Show buggy info page
+#------------------------------------------------------------
+@app.route('/info')
+def show_info():
+    return render_template("info.html")
 
 #------------------------------------------------------------
 # a placeholder page for editing the buggy: you'll need
@@ -81,7 +100,7 @@ def summary():
     cur = con.cursor()
     cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (DEFAULT_BUGGY_ID))
 
-    buggies = dict(zip([column[0] for column in cur.description], cur.fetchone())).items() 
+    buggies = dict(zip([column[0] for column in cur.description], cur.fetchone())).items()
     return jsonify({ key: val for key, val in buggies if (val != "" and val is not None) })
 
 # You shouldn't need to add anything below this!
