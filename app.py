@@ -32,7 +32,6 @@ def create_buggy():
         cur.execute("SELECT * FROM buggies")
         record = cur.fetchone();
         return render_template("buggy-form.html", buggy = record)
-        #<-- return render_template("buggy-form.html")-->
     elif request.method == 'POST':
         msg=""
         qty_wheels = request.form['qty_wheels']

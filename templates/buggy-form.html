@@ -2,13 +2,19 @@
 
 {% block content %}
 
-  <h1>Make a New Buggy</h1>
+  <h1>Create a New Buggy</h1>
+
+  <p>
+    <a href="/" class="button">home</a>
+  </p>
 
   <form action="/new" method="post">
-      <label for="qty_wheels">Number of wheels:</label>
-      <input type="text" name="qty_wheels" value="{{buggy['qty_wheels']}}"/>    
+    
+    <fieldset>
+      <legend><b>Power Systems:</b></legend>
       <br>
       <label for="power_type">Primary motive power:</label>
+      <br>
       <select id="power_type" name="power_type">
         <option value="{{buggy['power_type']}}" selected>{{buggy['power_type']}}</option>
         <option value="petrol">petrol</option>
@@ -22,11 +28,13 @@
         <option value="solar">solar</option>
         <option value="wind">wind</option>
       </select>  
-      <br>
+      <br><br>
       <label for="power_units">Primary motive power units:</label>
-      <input type="text" name="power_units" value="{{buggy['power_units']}}"/>    
       <br>
+      <input type="text" name="power_units" value="{{buggy['power_units']}}"/>    
+      <br><br>
       <label for="aux_power_type">Auxiliary motive power:</label>
+      <br>
       <select id="aux_power_type" name="aux_power_type">
         <option value="{{buggy['aux_power_type']}}" selected>{{buggy['aux_power_type']}}</option>
         <option value="none">none</option>
@@ -41,31 +49,26 @@
         <option value="solar">solar</option>
         <option value="wind">wind</option>
       </select>
-      <br>
+      <br><br>
       <label for="aux_power_units">Auxiliary motive power units:</label>
+      <br>
       <input type="text" name="aux_power_units" value="{{buggy['aux_power_units']}}"/> 
-      <br>
+      <br><br>
       <label for="hamster_booster">Hamster booster:</label>
+      <br>
       <input type="text" name="hamster_booster" value="{{buggy['hamster_booster']}}"/> 
+      <br><br>
+    </fieldset>
+    <br>
+    <fieldset>
+      <legend><b>Traction Systems:</b></legend>
       <br>
-      <label for="flag_color">Flag's colour:</label>
-      <input type="text" name="flag_color" value="{{buggy['flag_color']}}"/>
+      <label for="qty_wheels">Number of wheels:</label>
       <br>
-      <label for="flag_pattern">Flag's pattern:</label>
-      <select id="flag_pattern" name="flag_pattern">
-        <option value="{{buggy['flag_pattern']}}" selected>{{buggy['flag_pattern']}}</option>
-        <option value="plain" selected>plain</option>
-        <option value="vstripe">vstripe</option>
-        <option value="hstripe">hstripe</option>
-        <option value="dstripe">dstripe</option>
-        <option value="checker">checker</option>
-        <option value="spot">spot</option>
-      </select>
-      <br>
-      <label for="flag_color_secondary">Flag's other colour:</label>
-      <input type="text" name="flag_color_secondary" value="{{buggy['flag_color_secondary']}}"/> 
-      <br>
+      <input type="text" name="qty_wheels" value="{{buggy['qty_wheels']}}"/>    
+      <br><br>
       <label for="tyres">Type of tyres:</label>
+      <br>
       <select id="tyres" name="tyres">
         <option value="{{buggy['flag_pattern']}}" selected>{{buggy['flag_pattern']}}</option>
         <option value="knobbly">knobbly</option>
@@ -74,11 +77,18 @@
         <option value="reactive">reactive</option>
         <option value="maglev">maglev</option>
       </select>
-      <br>
+      <br><br>
       <label for="qty_tyres">Number of tyres:</label>
+      <br>
       <input type="text" name="qty_tyres" value="{{buggy['qty_tyres']}}"/> 
+      <br><br>
+    </fieldset>
+    <br>
+    <fieldset>
+      <legend><b>Offensive and Defensive Systems:</b></legend>
       <br>
       <label for="armour">Armour:</label>
+      <br>
       <select id="armour" name="armour">
         <option value="{{buggy['armour']}}" selected>{{buggy['armour']}}</option>
         <option value="none">none</option>
@@ -88,8 +98,9 @@
         <option value="thicksteel">thicksteel</option>
         <option value="titanium">titanium</option>
       </select>  
-      <br>
+      <br><br>
       <label for="attack">Offensive capability:</label>
+      <br>
       <select id="attack" name="attack">
         <option value="{{buggy['attack']}}" selected>{{buggy['attack']}}</option>
         <option value="none">none</option>
@@ -98,38 +109,13 @@
         <option value="charge">charge</option>
         <option value="biohazard">biohazard</option>
       </select> 
-      <br>
+      <br><br>
       <label for="qty_attacks">Number of attacks:</label>
+      <br>
       <input type="text" name="qty_attacks" value="{{buggy['qty_attacks']}}"/> 
-      <br>
-      <label for="fireproof">Fireproof?:</label>
-      <select id="fireproof" name="fireproof">
-        <option value="{{buggy['fireproof']}}" selected>{{buggy['fireproof']}}</option>
-        <option value="false" selected>false</option>
-        <option value="true">true</option>
-      </select> 
-      <br>
-      <label for="insulated">Insulated?	:</label>
-      <select id="insulated" name="insulated">
-        <option value="{{buggy['insulated']}}" selected>{{buggy['insulated']}}</option>
-        <option value="false" selected>false</option>
-        <option value="true">true</option>
-      </select> 
-      <br>
-      <label for="antibiotic">Antibiotic?:</label>
-      <select id="antibiotic" name="antibiotic">
-        <option value="{{buggy['antibiotic']}}" selected>{{buggy['antibiotic']}}</option>
-        <option value="false" selected>false</option>
-        <option value="true">true</option>
-      </select>
-      <br>
-      <label for="banging">Banging sound system?:</label>
-      <select id="banging" name="banging">
-        <option value="{{buggy['banging']}}" selected>{{buggy['banging']}}</option>
-        <option value="false" selected>No</option>
-        <option value="true">true</option>
-      </select><br>
+      <br><br>
       <label for="algo">Race computer algorithm:</label>
+      <br>
       <select id="algo" name="algo">
         <option value="{{buggy['algo']}}" selected>{{buggy['algo']}}</option>
         <option value="defensive">defensive</option>
@@ -139,7 +125,73 @@
         <option value="random">random</option>
         <option value="buggy">buggy</option>
       </select> 
+      <br><br>
+    </fieldset>
+    <br>
+    <fieldset>
+      <legend><b>Vehicle Identification:</b></legend>
+      <br>
+      <label for="flag_color">Flag's colour:</label>
+      <br>
+      <input type="color" name="flag_color" value="{{buggy['flag_color']}}"/>
+      <br><br>
+      <label for="flag_pattern">Flag's pattern:</label>
+      <br>
+      <select id="flag_pattern" name="flag_pattern">
+        <option value="{{buggy['flag_pattern']}}" selected>{{buggy['flag_pattern']}}</option>
+        <option value="plain" selected>plain</option>
+        <option value="vstripe">vstripe</option>
+        <option value="hstripe">hstripe</option>
+        <option value="dstripe">dstripe</option>
+        <option value="checker">checker</option>
+        <option value="spot">spot</option>
+      </select>
+      <br><br>
+      <label for="flag_color_secondary">Flag's other colour:</label>
+      <br>
+      <input type="color" name="flag_color_secondary" value="{{buggy['flag_color_secondary']}}"/> 
+      <br><br>
+    </fieldset>
+    <br>
+    <fieldset>
+      <legend><b>Special Systems:</b></legend>
+      <br>
+      <label for="fireproof">Fireproof?:</label>
+      <br>
+      <select id="fireproof" name="fireproof">
+        <option value="{{buggy['fireproof']}}" selected>{{buggy['fireproof']}}</option>
+        <option value="false" selected>false</option>
+        <option value="true">true</option>
+      </select> 
+      <br><br>
+      <label for="insulated">Insulated?	:</label>
+      <br>
+      <select id="insulated" name="insulated">
+        <option value="{{buggy['insulated']}}" selected>{{buggy['insulated']}}</option>
+        <option value="false" selected>false</option>
+        <option value="true">true</option>
+      </select> 
+      <br><br>
+      <label for="antibiotic">Antibiotic?:</label>
+      <br>
+      <select id="antibiotic" name="antibiotic">
+        <option value="{{buggy['antibiotic']}}" selected>{{buggy['antibiotic']}}</option>
+        <option value="false" selected>false</option>
+        <option value="true">true</option>
+      </select>
+      <br><br>
+      <label for="banging">Banging sound system?:</label>
+      <br>
+      <select id="banging" name="banging">
+        <option value="{{buggy['banging']}}" selected>{{buggy['banging']}}</option>
+        <option value="false" selected>false</option>
+        <option value="true">true</option>
+      </select>
+      <br><br>
+    </fieldset>
+  
     <input type="submit" class="button">
+    <input type="reset" class="button">
   </form>
 
   <p>

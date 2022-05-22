@@ -60,4 +60,19 @@ table td, table th {
 a {
   color: #CCFF33;
 }
+select {
+  font-size: 1em;
+  padding: 2px 5px;
+}
+fieldset
+{ 
+border: solid 2px #CCFF33;
+background-color: #3f3f3f !important;
+}
+legend {
+  background-color: #CCFF33;
+  color: #000000;
+  padding: 3px 6px;
+}
+
 }
