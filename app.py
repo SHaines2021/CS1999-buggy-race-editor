@@ -31,16 +31,16 @@ def create_buggy():
         msg=""
         qty_wheels = request.form['qty_wheels']
         flag_color = request.form['flag_color']
-        ############### here #########################################################
         error = None
         
         
         if qty_wheels.isdigit() is False:
             error = 'Incorrect type of data entered, please enter an integer.'
             flash(error)
-            return render_template('buggy-form.html')
+            return render_template('buggy-form.html', error=error)
             
         else:
+            flash('Data entered is valid')
             try:
                 with sql.connect(DATABASE_FILE) as con:
                     cur = con.cursor()
