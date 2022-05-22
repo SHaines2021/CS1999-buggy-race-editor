@@ -36,7 +36,26 @@ def create_buggy():
     elif request.method == 'POST':
         msg=""
         qty_wheels = request.form['qty_wheels']
+        power_type = request.form['power_type']
+        power_units = request.form['power_units']
+        aux_power_type = request.form['aux_power_type']
+        aux_power_units = request.form['aux_power_units']
+        hamster_booster = request.form['hamster_booster']
         flag_color = request.form['flag_color']
+        flag_pattern = request.form['flag_pattern']
+        flag_color_secondary = request.form['flag_color_secondary']
+        tyres = request.form['tyres']
+        qty_tyres = request.form['qty_tyres']
+        armour = request.form['armour']
+        attack = request.form['attack']
+        qty_attacks = request.form['qty_attacks']
+        fireproof = request.form['fireproof']
+        insulated = request.form['insulated']
+        antibiotic = request.form['antibiotic']
+        banging = request.form['banging']
+        algo = request.form['algo']
+        
+        
         error = None
         
         
@@ -51,8 +70,8 @@ def create_buggy():
                 with sql.connect(DATABASE_FILE) as con:
                     cur = con.cursor()
                     cur.execute(
-                        "UPDATE buggies set qty_wheels=?, flag_color=? WHERE id=?",
-                        (qty_wheels, flag_color, DEFAULT_BUGGY_ID)
+                        "UPDATE buggies set qty_wheels=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, hamster_booster=?, flag_color_secondary=?, tyres=?, qty_tyres=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=? WHERE id=?",
+                        (qty_wheels, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, hamster_booster, flag_color_secondary, tyres, qty_tyres, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, DEFAULT_BUGGY_ID)
                     )
                     con.commit()
                     msg = "Record successfully saved"

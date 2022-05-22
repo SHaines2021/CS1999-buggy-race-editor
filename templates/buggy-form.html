@@ -5,10 +5,140 @@
   <h1>Make a New Buggy</h1>
 
   <form action="/new" method="post">
-    <label for="qty_wheels">Number of wheels:</label>
-    <input type="text" name="qty_wheels" value="{{buggy['qty_wheels']}}"/>    
-    <label for="flag_color">Select Flag Colour:</label>
-    <input type="text" name="flag_color" value="{{buggy['flag_color']}}"/>
+      <label for="qty_wheels">Number of wheels:</label>
+      <input type="text" name="qty_wheels" value="{{buggy['qty_wheels']}}"/>    
+      <br>
+      <label for="power_type">Primary motive power:</label>
+      <select id="power_type" name="power_type">
+        <option value="{{buggy['power_type']}}" selected>{{buggy['power_type']}}</option>
+        <option value="petrol">petrol</option>
+        <option value="fusion">fusion</option>
+        <option value="steam">steam</option>
+        <option value="bio">bio</option>
+        <option value="electric">electric</option>
+        <option value="rocket">rocket</option>
+        <option value="hamster">hamster</option>
+        <option value="thermo">thermo</option>
+        <option value="solar">solar</option>
+        <option value="wind">wind</option>
+      </select>  
+      <br>
+      <label for="power_units">Primary motive power units:</label>
+      <input type="text" name="power_units" value="{{buggy['power_units']}}"/>    
+      <br>
+      <label for="aux_power_type">Auxiliary motive power:</label>
+      <select id="aux_power_type" name="aux_power_type">
+        <option value="{{buggy['aux_power_type']}}" selected>{{buggy['aux_power_type']}}</option>
+        <option value="none">none</option>
+        <option value="petrol">petrol</option>
+        <option value="fusion">fusion</option>
+        <option value="steam">steam</option>
+        <option value="bio">bio</option>
+        <option value="electric">electric</option>
+        <option value="rocket">rocket</option>
+        <option value="hamster">hamster</option>
+        <option value="thermo">thermo</option>
+        <option value="solar">solar</option>
+        <option value="wind">wind</option>
+      </select>
+      <br>
+      <label for="aux_power_units">Auxiliary motive power units:</label>
+      <input type="text" name="aux_power_units" value="{{buggy['aux_power_units']}}"/> 
+      <br>
+      <label for="hamster_booster">Hamster booster:</label>
+      <input type="text" name="hamster_booster" value="{{buggy['hamster_booster']}}"/> 
+      <br>
+      <label for="flag_color">Flag's colour:</label>
+      <input type="text" name="flag_color" value="{{buggy['flag_color']}}"/>
+      <br>
+      <label for="flag_pattern">Flag's pattern:</label>
+      <select id="flag_pattern" name="flag_pattern">
+        <option value="{{buggy['flag_pattern']}}" selected>{{buggy['flag_pattern']}}</option>
+        <option value="plain" selected>plain</option>
+        <option value="vstripe">vstripe</option>
+        <option value="hstripe">hstripe</option>
+        <option value="dstripe">dstripe</option>
+        <option value="checker">checker</option>
+        <option value="spot">spot</option>
+      </select>
+      <br>
+      <label for="flag_color_secondary">Flag's other colour:</label>
+      <input type="text" name="flag_color_secondary" value="{{buggy['flag_color_secondary']}}"/> 
+      <br>
+      <label for="tyres">Type of tyres:</label>
+      <select id="tyres" name="tyres">
+        <option value="{{buggy['flag_pattern']}}" selected>{{buggy['flag_pattern']}}</option>
+        <option value="knobbly">knobbly</option>
+        <option value="slick">slick</option>
+        <option value="steelband">steelband</option>
+        <option value="reactive">reactive</option>
+        <option value="maglev">maglev</option>
+      </select>
+      <br>
+      <label for="qty_tyres">Number of tyres:</label>
+      <input type="text" name="qty_tyres" value="{{buggy['qty_tyres']}}"/> 
+      <br>
+      <label for="armour">Armour:</label>
+      <select id="armour" name="armour">
+        <option value="{{buggy['armour']}}" selected>{{buggy['armour']}}</option>
+        <option value="none">none</option>
+        <option value="wood">wood</option>
+        <option value="aluminium">aluminium</option>
+        <option value="thinsteel">thinsteel</option>
+        <option value="thicksteel">thicksteel</option>
+        <option value="titanium">titanium</option>
+      </select>  
+      <br>
+      <label for="attack">Offensive capability:</label>
+      <select id="attack" name="attack">
+        <option value="{{buggy['attack']}}" selected>{{buggy['attack']}}</option>
+        <option value="none">none</option>
+        <option value="spike">spike</option>
+        <option value="flame">flame</option>
+        <option value="charge">charge</option>
+        <option value="biohazard">biohazard</option>
+      </select> 
+      <br>
+      <label for="qty_attacks">Number of attacks:</label>
+      <input type="text" name="qty_attacks" value="{{buggy['qty_attacks']}}"/> 
+      <br>
+      <label for="fireproof">Fireproof?:</label>
+      <select id="fireproof" name="fireproof">
+        <option value="{{buggy['fireproof']}}" selected>{{buggy['fireproof']}}</option>
+        <option value="false" selected>false</option>
+        <option value="true">true</option>
+      </select> 
+      <br>
+      <label for="insulated">Insulated?	:</label>
+      <select id="insulated" name="insulated">
+        <option value="{{buggy['insulated']}}" selected>{{buggy['insulated']}}</option>
+        <option value="false" selected>false</option>
+        <option value="true">true</option>
+      </select> 
+      <br>
+      <label for="antibiotic">Antibiotic?:</label>
+      <select id="antibiotic" name="antibiotic">
+        <option value="{{buggy['antibiotic']}}" selected>{{buggy['antibiotic']}}</option>
+        <option value="false" selected>false</option>
+        <option value="true">true</option>
+      </select>
+      <br>
+      <label for="banging">Banging sound system?:</label>
+      <select id="banging" name="banging">
+        <option value="{{buggy['banging']}}" selected>{{buggy['banging']}}</option>
+        <option value="false" selected>No</option>
+        <option value="true">true</option>
+      </select><br>
+      <label for="algo">Race computer algorithm:</label>
+      <select id="algo" name="algo">
+        <option value="{{buggy['algo']}}" selected>{{buggy['algo']}}</option>
+        <option value="defensive">defensive</option>
+        <option value="steady" selected>steady</option>
+        <option value="offensive">offensive</option>
+        <option value="titfortat">titfortat</option>
+        <option value="random">random</option>
+        <option value="buggy">buggy</option>
+      </select> 
     <input type="submit" class="button">
   </form>
 
