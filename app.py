@@ -1,4 +1,7 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
+from urllib.request import urlopen
+import json
+import math
 import os
 import sqlite3 as sql
 
@@ -10,6 +13,7 @@ app.secret_key='12345'
 DATABASE_FILE = "database.db"
 DEFAULT_BUGGY_ID = "1"
 BUGGY_RACE_SERVER_URL = "https://rhul.buggyrace.net"
+
 
 #------------------------------------------------------------
 # the index page
@@ -25,6 +29,9 @@ def home():
 #------------------------------------------------------------
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
+    url = "https://rhul.buggyrace.net/specs/data/types.json"
+    response = urlopen(url)
+    data_json = json.loads(response.read())
     if request.method == 'GET':
         con = sql.connect(DATABASE_FILE)
         con.row_factory = sql.Row
@@ -53,6 +60,15 @@ def create_buggy():
         antibiotic = request.form['antibiotic']
         banging = request.form['banging']
         algo = request.form['algo']
+        power_cost = data_json['power_type'][power_type]['cost']
+        aux_power_cost = data_json['power_type'][aux_power_type]['cost']
+        hamster_cost = data_json['special']['hamster_booster']['cost']
+        tyres_cost = data_json['tyres'][tyres]['cost']       
+        total_power_cost = ((int(power_units) * int(power_cost)) + (int(aux_power_units) * int(aux_power_cost))+(int(hamster_booster)*int(hamster_cost)))
+        total_tyres_cost = (int(qty_tyres) * int(tyres_cost))
+        # total_offdef_cost = 
+        # total_special_cost = 
+        # total_cost = 
         
         
         error = None
@@ -69,8 +85,8 @@ def create_buggy():
                 with sql.connect(DATABASE_FILE) as con:
                     cur = con.cursor()
                     cur.execute(
-                        "UPDATE buggies set qty_wheels=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, hamster_booster=?, flag_color_secondary=?, tyres=?, qty_tyres=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=? WHERE id=?",
-                        (qty_wheels, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, hamster_booster, flag_color_secondary, tyres, qty_tyres, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, DEFAULT_BUGGY_ID)
+                        "UPDATE buggies set qty_wheels=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_pattern=?, flag_color_secondary=?, tyres=?, qty_tyres=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=?, power_cost=?, aux_power_cost=?, hamster_cost=?, tyres_cost=?, total_power_cost=?, total_tyres_cost=? WHERE id=?",
+                        (qty_wheels, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_pattern, flag_color_secondary, tyres, qty_tyres, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, power_cost, aux_power_cost, hamster_cost, tyres_cost, total_power_cost, total_tyres_cost, DEFAULT_BUGGY_ID)
                     )
                     con.commit()
                     msg = "Record successfully saved"

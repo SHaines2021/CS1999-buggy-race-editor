@@ -28,7 +28,7 @@ connection.execute("""
     qty_wheels            INTEGER DEFAULT 4,
     power_type            VARCHAR(20) DEFAULT 'petrol',
     power_units           INTEGER DEFAULT 1,
-    aux_power_type        VARCHAR(20),
+    aux_power_type        VARCHAR(20) DEFAULT 'none',
     aux_power_units       INTEGER DEFAULT 0,
     hamster_booster       INTEGER DEFAULT 0,
     flag_color            VARCHAR(20) DEFAULT 'white',
@@ -43,7 +43,18 @@ connection.execute("""
     insulated             BOOLEAN DEFAULT false,
     antibiotic            BOOLEAN DEFAULT false,
     banging               BOOLEAN DEFAULT false,
-    algo                  VARCHAR(20) DEFAULT 'steady'
+    algo                  VARCHAR(20) DEFAULT 'steady',
+    power_cost            INTEGER DEFAULT 4,
+    aux_power_cost        INTEGER DEFAULT 0,
+    hamster_cost          INTEGER DEFAULT 0,
+    tyres_cost            INTEGER DEFAULT 15,
+    armour_cost           INTEGER DEFAULT 0,
+    fireproof_cost        INTEGER DEFAULT 0,
+    insulated_cost        INTEGER DEFAULT 0,
+    antibiotic_cost       INTEGER DEFAULT 0,
+    banging_cost          INTEGER DEFAULT 0,
+    total_power_cost      INTEGER DEFAULT 4,
+    total_tyres_cost      INTEGER DEFAULT 60
     )
 
 """)
