@@ -49,12 +49,17 @@ connection.execute("""
     hamster_cost          INTEGER DEFAULT 0,
     tyres_cost            INTEGER DEFAULT 15,
     armour_cost           INTEGER DEFAULT 0,
+    attack_cost           INTEGER DEFAULT 0,
+    algo_cost             INTEGER DEFAULT 0,
     fireproof_cost        INTEGER DEFAULT 0,
     insulated_cost        INTEGER DEFAULT 0,
     antibiotic_cost       INTEGER DEFAULT 0,
     banging_cost          INTEGER DEFAULT 0,
     total_power_cost      INTEGER DEFAULT 4,
-    total_tyres_cost      INTEGER DEFAULT 60
+    total_tyres_cost      INTEGER DEFAULT 60,
+    total_offdef_cost     INTEGER DEFAULT 0,
+    total_special_cost    INTEGER DEFAULT 0,
+    total_cost            INTEGER DEFAULT 64
     )
 
 """)

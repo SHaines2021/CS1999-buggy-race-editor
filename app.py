@@ -61,14 +61,38 @@ def create_buggy():
         banging = request.form['banging']
         algo = request.form['algo']
         power_cost = data_json['power_type'][power_type]['cost']
-        aux_power_cost = data_json['power_type'][aux_power_type]['cost']
+        if aux_power_type == 'none':
+            aux_power_cost = '0'
+        else:
+            aux_power_cost = data_json['power_type'][aux_power_type]['cost']
         hamster_cost = data_json['special']['hamster_booster']['cost']
-        tyres_cost = data_json['tyres'][tyres]['cost']       
+        tyres_cost = data_json['tyres'][tyres]['cost']  
+        armour_cost = data_json['armour'][armour]['cost'] 
+        attack_cost = data_json['attack'][attack]['cost']     
+        algo_cost = data_json['algo'][algo]['cost']
+        if fireproof == 'false':
+            fireproof_cost = '0'
+        else:
+            fireproof_cost = data_json['special']['fireproof']['cost']
+        if insulated == 'false':
+            insulated_cost = '0'
+        else:
+            insulated_cost = data_json['special']['insulated']['cost']
+        if antibiotic == 'false':
+            antibiotic_cost = '0'
+        else:
+            antibiotic_cost = data_json['special']['antibiotic']['cost']
+        if banging == 'false':
+            banging_cost = '0'
+        else:
+            banging_cost = data_json['special']['banging']['cost']
+
         total_power_cost = ((int(power_units) * int(power_cost)) + (int(aux_power_units) * int(aux_power_cost))+(int(hamster_booster)*int(hamster_cost)))
         total_tyres_cost = (int(qty_tyres) * int(tyres_cost))
-        # total_offdef_cost = 
-        # total_special_cost = 
-        # total_cost = 
+        total_offdef_cost = (int(armour_cost)+int(int(attack_cost)*int(qty_attacks))+int(algo_cost))
+        total_special_cost = (int(fireproof_cost)+int(insulated_cost)+int(antibiotic_cost)+int(banging_cost))
+        total_cost = (int(total_power_cost)+int(total_tyres_cost)+int(total_offdef_cost)+int(total_special_cost))
+
         
         
         error = None
@@ -85,8 +109,8 @@ def create_buggy():
                 with sql.connect(DATABASE_FILE) as con:
                     cur = con.cursor()
                     cur.execute(
-                        "UPDATE buggies set qty_wheels=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_pattern=?, flag_color_secondary=?, tyres=?, qty_tyres=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=?, power_cost=?, aux_power_cost=?, hamster_cost=?, tyres_cost=?, total_power_cost=?, total_tyres_cost=? WHERE id=?",
-                        (qty_wheels, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_pattern, flag_color_secondary, tyres, qty_tyres, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, power_cost, aux_power_cost, hamster_cost, tyres_cost, total_power_cost, total_tyres_cost, DEFAULT_BUGGY_ID)
+                        "UPDATE buggies set qty_wheels=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_pattern=?, flag_color_secondary=?, tyres=?, qty_tyres=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=?, power_cost=?, aux_power_cost=?, hamster_cost=?, tyres_cost=?, armour_cost=?, attack_cost=?, algo_cost=?, fireproof_cost=?, insulated_cost=?, antibiotic_cost=?, banging_cost=?, total_power_cost=?, total_tyres_cost=?, total_offdef_cost=?, total_special_cost=?, total_cost=? WHERE id=?",
+                        (qty_wheels, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_pattern, flag_color_secondary, tyres, qty_tyres, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, power_cost, aux_power_cost, hamster_cost, tyres_cost, armour_cost, attack_cost, algo_cost, fireproof_cost, insulated_cost, antibiotic_cost, banging_cost, total_power_cost, total_tyres_cost, total_offdef_cost, total_special_cost, total_cost, DEFAULT_BUGGY_ID)
                     )
                     con.commit()
                     msg = "Record successfully saved"
