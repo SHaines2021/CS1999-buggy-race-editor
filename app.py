@@ -32,14 +32,17 @@ def create_buggy():
     url = "https://rhul.buggyrace.net/specs/data/types.json"
     response = urlopen(url)
     data_json = json.loads(response.read())
+    
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies")
+    record = cur.fetchone();
+
     if request.method == 'GET':
-        con = sql.connect(DATABASE_FILE)
-        con.row_factory = sql.Row
-        cur = con.cursor()
-        cur.execute("SELECT * FROM buggies")
-        record = cur.fetchone();
         return render_template("buggy-form.html", buggy = record)
     elif request.method == 'POST':
+        error = None
         msg=""
         qty_wheels = request.form['qty_wheels']
         power_type = request.form['power_type']
@@ -87,24 +90,82 @@ def create_buggy():
         else:
             banging_cost = data_json['special']['banging']['cost']
 
-        total_power_cost = ((int(power_units) * int(power_cost)) + (int(aux_power_units) * int(aux_power_cost))+(int(hamster_booster)*int(hamster_cost)))
-        total_tyres_cost = (int(qty_tyres) * int(tyres_cost))
-        total_offdef_cost = (int(armour_cost)+int(int(attack_cost)*int(qty_attacks))+int(algo_cost))
-        total_special_cost = (int(fireproof_cost)+int(insulated_cost)+int(antibiotic_cost)+int(banging_cost))
-        total_cost = (int(total_power_cost)+int(total_tyres_cost)+int(total_offdef_cost)+int(total_special_cost))
-
+        
+              
         
         
-        error = None
         
-        
+        # data validation:
+        #is the entered data an integer?
         if qty_wheels.isdigit() is False:
-            error = 'Incorrect type of data entered, please enter an integer.'
+            error = 'Oops! Incorrect type of data entered, please enter an integer. (qty_wheels)'
             flash(error)
-            return render_template('buggy-form.html', error=error)
-            
+            return render_template('buggy-form.html', buggy = record)
+        elif power_units.isdigit() is False:
+            error = 'Oops! Incorrect type of data entered, please enter an integer. (power_units)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        elif aux_power_units.isdigit() is False:
+            error = 'Oops! Incorrect type of data entered, please enter an integer. (aux_power_units)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        elif hamster_booster.isdigit() is False:
+            error = 'Oops! Incorrect type of data entered, please enter an integer. (hamster_booster)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        elif qty_tyres.isdigit() is False:
+            error = 'Oops! Incorrect type of data entered, please enter an integer. (qty_tyres)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        elif qty_attacks.isdigit() is False:
+            error = 'Oops! Incorrect type of data entered, please enter an integer. (qty_attacks)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        #are there 4 or more wheels?
+        elif int(qty_wheels)<=3:
+            error = 'Oops! Please enter 4 or more wheels. (qty_wheels)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        #are the wheels an even number?
+        elif int(qty_wheels)%2 !=0:
+            error = 'Oops! Please enter an even number of wheels. (qty_wheels)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        #at least 1 unit of power?
+        elif int(power_units)<=1:
+            error = 'Oops! Please enter at least 1 unit of power. (power_units)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        #at least 0 units of power?
+        elif int(aux_power_units)<0:
+            error = 'Oops! Please enter at least 0 units of aux power. (aux_power_units)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        #two flag colours required if flag pattern is not plain
+        elif flag_pattern != 'plain':
+            if flag_color == flag_color_secondary:
+                error = 'Oops! Please enter two different flag colours when not using the plain flag pattern. (flag_color)'
+                flash(error)
+                return render_template('buggy-form.html', buggy = record)
+        #are there equal number or more tyres than wheels?
+        elif int(qty_tyres)<=int(qty_wheels):
+            error = 'Oops! Please enter an equal or greater number of tyres than wheels. (qty_tyres)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+        #at least 0 units of attack?
+        elif int(qty_attacks)<0:
+            error = 'Oops! Please enter at least 0 attacks. (qty_attacks)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
+
         else:
-            flash('Data entered is valid')
+            total_power_cost = ((int(power_units) * int(power_cost)) + (int(aux_power_units) * int(aux_power_cost))+(int(hamster_booster)*int(hamster_cost)))
+            total_tyres_cost = (int(qty_tyres) * int(tyres_cost))
+            total_offdef_cost = (int(armour_cost)+int(int(attack_cost)*int(qty_attacks))+int(algo_cost))
+            total_special_cost = (int(fireproof_cost)+int(insulated_cost)+int(antibiotic_cost)+int(banging_cost))
+            total_cost = (int(total_power_cost)+int(total_tyres_cost)+int(total_offdef_cost)+int(total_special_cost))
+
+            flash('Thanks! Data entered is valid!')
             try:
                 with sql.connect(DATABASE_FILE) as con:
                     cur = con.cursor()
@@ -120,6 +181,7 @@ def create_buggy():
             finally:
                 con.close()
             return render_template("updated.html", msg = msg)
+        
 
 #------------------------------------------------------------
 # a page for displaying the buggy
