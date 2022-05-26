@@ -41,30 +41,59 @@ def create_buggy():
 
     if request.method == 'GET':
         return render_template("buggy-form.html", buggy = record)
+            
     elif request.method == 'POST':
         error = None
         msg=""
-        qty_wheels = request.form['qty_wheels']
-        power_type = request.form['power_type']
-        power_units = request.form['power_units']
-        aux_power_type = request.form['aux_power_type']
-        aux_power_units = request.form['aux_power_units']
-        hamster_booster = request.form['hamster_booster']
-        flag_color = request.form['flag_color']
-        flag_pattern = request.form['flag_pattern']
-        flag_color_secondary = request.form['flag_color_secondary']
-        tyres = request.form['tyres']
-        qty_tyres = request.form['qty_tyres']
-        armour = request.form['armour']
-        attack = request.form['attack']
-        qty_attacks = request.form['qty_attacks']
-        fireproof = request.form['fireproof']
-        insulated = request.form['insulated']
-        antibiotic = request.form['antibiotic']
-        banging = request.form['banging']
-        algo = request.form['algo']
+        if request.form.get('defaults') == 'Apply Defaults':
+            url_default = "https://rhul.buggyrace.net/specs/data/defaults.json"
+            response_def = urlopen(url_default)
+            data_json_def = json.loads(response_def.read())
+
+            qty_wheels = str(data_json_def['qty_wheels'])
+            power_type = str(data_json_def['power_type'])
+            power_units = str(data_json_def['power_units'])
+            aux_power_type = str(data_json_def['aux_power_type'])
+            aux_power_units = str(data_json_def['aux_power_units'])
+            hamster_booster = str(data_json_def['hamster_booster'])
+            flag_color = str(data_json_def['flag_color'])
+            flag_pattern = str(data_json_def['flag_pattern'])
+            flag_color_secondary = str(data_json_def['flag_color_secondary'])
+            tyres = str(data_json_def['tyres'])
+            qty_tyres = str(data_json_def['qty_tyres'])
+            armour = str(data_json_def['armour'])
+            attack = str(data_json_def['attack'])
+            qty_attacks = str(data_json_def['qty_attacks'])
+            fireproof = str(data_json_def['fireproof'])
+            insulated = str(data_json_def['insulated'])
+            antibiotic = str(data_json_def['antibiotic'])
+            banging = str(data_json_def['banging'])
+            algo = str(data_json_def['algo'])
+
+        else:
+            qty_wheels = request.form['qty_wheels']
+            power_type = request.form['power_type']
+            power_units = request.form['power_units']
+            aux_power_type = request.form['aux_power_type']
+            aux_power_units = request.form['aux_power_units']
+            hamster_booster = request.form['hamster_booster']
+            flag_color = request.form['flag_color']
+            flag_pattern = request.form['flag_pattern']
+            flag_color_secondary = request.form['flag_color_secondary']
+            tyres = request.form['tyres']
+            qty_tyres = request.form['qty_tyres']
+            armour = request.form['armour']
+            attack = request.form['attack']
+            qty_attacks = request.form['qty_attacks']
+            fireproof = request.form['fireproof']
+            insulated = request.form['insulated']
+            antibiotic = request.form['antibiotic']
+            banging = request.form['banging']
+            algo = request.form['algo']
+
+
         power_cost = data_json['power_type'][power_type]['cost']
-        if aux_power_type == 'none':
+        if aux_power_type == 'none' or 'null':
             aux_power_cost = '0'
         else:
             aux_power_cost = data_json['power_type'][aux_power_type]['cost']
@@ -90,10 +119,7 @@ def create_buggy():
         else:
             banging_cost = data_json['special']['banging']['cost']
 
-        
-              
-        
-        
+
         
         # data validation:
         #is the entered data an integer?
@@ -132,7 +158,7 @@ def create_buggy():
             flash(error)
             return render_template('buggy-form.html', buggy = record)
         #at least 1 unit of power?
-        elif int(power_units)<=1:
+        elif int(power_units)<1:
             error = 'Oops! Please enter at least 1 unit of power. (power_units)'
             flash(error)
             return render_template('buggy-form.html', buggy = record)
@@ -148,7 +174,7 @@ def create_buggy():
                 flash(error)
                 return render_template('buggy-form.html', buggy = record)
         #are there equal number or more tyres than wheels?
-        elif int(qty_tyres)<=int(qty_wheels):
+        elif int(qty_tyres)<int(qty_wheels):
             error = 'Oops! Please enter an equal or greater number of tyres than wheels. (qty_tyres)'
             flash(error)
             return render_template('buggy-form.html', buggy = record)
