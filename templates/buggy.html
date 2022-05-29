@@ -2,95 +2,95 @@
 
 {% block content %}
 
-  <h1>Your Buggy</h1>
+  <h1>All Buggies</h1>
+  {% for buggy in buggies %}
+    <table>
 
-  <table>
+      <tr>
+        <td>Reference</td> <td>Value</td> <td>Cost</td><td>Total Costs</td>
+      </tr>
+      <tr>
+        <td>ID:</td> <td><b> {{ buggy['id'] }} </b></td> <td>--</td>
+      </tr>
+      <tr>
+        <td>Primary motive power:</td> <td> {{ buggy['power_type'] }} </td> <td>{{ buggy['power_cost'] }}</td> 
+      </tr>
+      <tr>
+        <td>Primary motive power units:</td> <td> {{ buggy['power_units'] }} </td><td>--</td>
+      </tr>
+      <tr>
+        <td>Auxiliary motive power:</td> <td> {{ buggy['aux_power_type'] }} </td> <td>{{ buggy['aux_power_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Auxiliary motive power units:</td> <td> {{ buggy['aux_power_units'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td>Hamster booster:</td> <td> {{ buggy['hamster_booster'] }} </td> <td>{{ buggy['hamster_cost'] }}</td>
+      </tr>
+      <tr>
+        <td><b>Total Power Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_power_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td>Wheels:</td> <td> {{ buggy['qty_wheels'] }} </td><td>--</td>
+      </tr>
+      <tr>
+        <td>Type of tyres:</td> <td> {{ buggy['tyres'] }} </td> <td> {{ buggy['tyres_cost'] }} </td> 
+      </tr>
+      <tr>
+        <td>Number of tyres:</td> <td> {{ buggy['qty_tyres'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td><b>Total Traction Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_tyres_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td>Armour:</td> <td> {{ buggy['armour'] }} </td> <td>{{ buggy['armour_cost'] }}</td
+      </tr>
+      <tr>
+        <td>Offensive capability:</td> <td> {{ buggy['attack'] }} </td> <td>{{ buggy['attack_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Number of attacks:</td> <td> {{ buggy['qty_attacks'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td>Race computer algorithm:</td> <td> {{ buggy['algo'] }} </td> <td>{{ buggy['algo_cost'] }}</td>
+      </tr>
+      <tr>
+        <td><b>Total Offensive and Defensive Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_offdef_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td>Flag colour:</td> <td> {{ buggy['flag_color'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td>Flag's pattern:</td> <td> {{ buggy['flag_pattern'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td>Flag's other colour:</td> <td> {{ buggy['flag_color_secondary'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td><b>Total Vehicle Identification Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>0</u></b></td>
+      </tr>  
+      <tr>
+        <td>Fireproof?:</td> <td> {{ buggy['fireproof'] }} </td> <td>{{ buggy['fireproof_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Insulated?:</td> <td> {{ buggy['insulated'] }} </td> <td>{{ buggy['insulated_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Antibiotic?:</td> <td> {{ buggy['antibiotic'] }} </td> <td>{{ buggy['antibiotic_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Banging sound system?:</td> <td> {{ buggy['banging'] }} </td> <td>{{ buggy['banging_cost'] }}</td>
+      </tr>
+      <tr>
+        <td><b>Total Special Systems Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_special_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td><b>Overall Total Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_cost'] }}</u></b></td>
+      </tr>
+      
 
-    <tr>
-      <td>Reference</td> <td>Value</td> <td>Cost</td><td>Total Costs</td>
-    </tr>
-    <tr>
-      <td>ID:</td> <td> {{ buggy['id'] }} </td> <td>--</td>
-    </tr>
-    <tr>
-      <td>Primary motive power:</td> <td> {{ buggy['power_type'] }} </td> <td>{{ buggy['power_cost'] }}</td> 
-    </tr>
-    <tr>
-      <td>Primary motive power units:</td> <td> {{ buggy['power_units'] }} </td><td>--</td>
-    </tr>
-    <tr>
-      <td>Auxiliary motive power:</td> <td> {{ buggy['aux_power_type'] }} </td> <td>{{ buggy['aux_power_cost'] }}</td>
-    </tr>
-    <tr>
-      <td>Auxiliary motive power units:</td> <td> {{ buggy['aux_power_units'] }} </td> <td>--</td>
-    </tr>
-    <tr>
-      <td>Hamster booster:</td> <td> {{ buggy['hamster_booster'] }} </td> <td>{{ buggy['hamster_cost'] }}</td>
-    </tr>
-    <tr>
-      <td><b>Total Power Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_power_cost'] }}</u></b></td>
-    </tr>
-    <tr>
-      <td>Wheels:</td> <td> {{ buggy['qty_wheels'] }} </td><td>--</td>
-    </tr>
-    <tr>
-      <td>Type of tyres:</td> <td> {{ buggy['tyres'] }} </td> <td> {{ buggy['tyres_cost'] }} </td> 
-    </tr>
-    <tr>
-      <td>Number of tyres:</td> <td> {{ buggy['qty_tyres'] }} </td> <td>--</td>
-    </tr>
-    <tr>
-      <td><b>Total Traction Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_tyres_cost'] }}</u></b></td>
-    </tr>
-    <tr>
-      <td>Armour:</td> <td> {{ buggy['armour'] }} </td> <td>{{ buggy['armour_cost'] }}</td
-    </tr>
-    <tr>
-      <td>Offensive capability:</td> <td> {{ buggy['attack'] }} </td> <td>{{ buggy['attack_cost'] }}</td>
-    </tr>
-    <tr>
-      <td>Number of attacks:</td> <td> {{ buggy['qty_attacks'] }} </td> <td>--</td>
-    </tr>
-    <tr>
-      <td>Race computer algorithm:</td> <td> {{ buggy['algo'] }} </td> <td>{{ buggy['algo_cost'] }}</td>
-    </tr>
-    <tr>
-      <td><b>Total Offensive and Defensive Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_offdef_cost'] }}</u></b></td>
-    </tr>
-    <tr>
-      <td>Flag colour:</td> <td> {{ buggy['flag_color'] }} </td> <td>--</td>
-    </tr>
-    <tr>
-      <td>Flag's pattern:</td> <td> {{ buggy['flag_pattern'] }} </td> <td>--</td>
-    </tr>
-    <tr>
-      <td>Flag's other colour:</td> <td> {{ buggy['flag_color_secondary'] }} </td> <td>--</td>
-    </tr>
-    <tr>
-      <td><b>Total Vehicle Identification Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>0</u></b></td>
-    </tr>  
-    <tr>
-      <td>Fireproof?:</td> <td> {{ buggy['fireproof'] }} </td> <td>{{ buggy['fireproof_cost'] }}</td>
-    </tr>
-    <tr>
-      <td>Insulated?:</td> <td> {{ buggy['insulated'] }} </td> <td>{{ buggy['insulated_cost'] }}</td>
-    </tr>
-    <tr>
-      <td>Antibiotic?:</td> <td> {{ buggy['antibiotic'] }} </td> <td>{{ buggy['antibiotic_cost'] }}</td>
-    </tr>
-    <tr>
-      <td>Banging sound system?:</td> <td> {{ buggy['banging'] }} </td> <td>{{ buggy['banging_cost'] }}</td>
-    </tr>
-    <tr>
-      <td><b>Total Special Systems Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_special_cost'] }}</u></b></td>
-    </tr>
-    <tr>
-      <td><b>Overall Total Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_cost'] }}</u></b></td>
-    </tr>
-    
-
-  </table>
-
+    </table>
+  {% endfor %}
   <p>
     <a href="/" class="button">home</a>
   </p>
