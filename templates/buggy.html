@@ -28,7 +28,7 @@
         <td>Hamster booster:</td> <td> {{ buggy['hamster_booster'] }} </td> <td>{{ buggy['hamster_cost'] }}</td>
       </tr>
       <tr>
-        <td><b>Total Power Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_power_cost'] }}</u></b></td>
+        <td colspan="3"><b>Total Power Cost:</b></td><td><b><u>{{ buggy['total_power_cost'] }}</u></b></td>
       </tr>
       <tr>
         <td>Wheels:</td> <td> {{ buggy['qty_wheels'] }} </td><td>--</td>
@@ -40,7 +40,7 @@
         <td>Number of tyres:</td> <td> {{ buggy['qty_tyres'] }} </td> <td>--</td>
       </tr>
       <tr>
-        <td><b>Total Traction Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_tyres_cost'] }}</u></b></td>
+        <td colspan="3"><b>Total Traction Cost:</b></td><td><b><u>{{ buggy['total_tyres_cost'] }}</u></b></td>
       </tr>
       <tr>
         <td>Armour:</td> <td> {{ buggy['armour'] }} </td> <td>{{ buggy['armour_cost'] }}</td
@@ -55,7 +55,7 @@
         <td>Race computer algorithm:</td> <td> {{ buggy['algo'] }} </td> <td>{{ buggy['algo_cost'] }}</td>
       </tr>
       <tr>
-        <td><b>Total Offensive and Defensive Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_offdef_cost'] }}</u></b></td>
+        <td colspan="3"><b>Total Offensive and Defensive Cost:</b></td><td><b><u>{{ buggy['total_offdef_cost'] }}</u></b></td>
       </tr>
       <tr>
         <td>Flag colour:</td> <td> {{ buggy['flag_color'] }} </td> <td>--</td>
@@ -67,7 +67,7 @@
         <td>Flag's other colour:</td> <td> {{ buggy['flag_color_secondary'] }} </td> <td>--</td>
       </tr>
       <tr>
-        <td><b>Total Vehicle Identification Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>0</u></b></td>
+        <td colspan="3"><b>Total Vehicle Identification Cost:</b></td><td><b><u>0</u></b></td>
       </tr>  
       <tr>
         <td>Fireproof?:</td> <td> {{ buggy['fireproof'] }} </td> <td>{{ buggy['fireproof_cost'] }}</td>
@@ -82,10 +82,13 @@
         <td>Banging sound system?:</td> <td> {{ buggy['banging'] }} </td> <td>{{ buggy['banging_cost'] }}</td>
       </tr>
       <tr>
-        <td><b>Total Special Systems Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_special_cost'] }}</u></b></td>
+        <td colspan="3"><b>Total Special Systems Cost:</b></td><td><b><u>{{ buggy['total_special_cost'] }}</u></b></td>
       </tr>
       <tr>
-        <td><b>Overall Total Cost:</b></td> <td> -- </td> <td> -- </td><td><b><u>{{ buggy['total_cost'] }}</u></b></td>
+        <td colspan="3"><b>Overall Total Cost:</b></td><td><b><u>{{ buggy['total_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td colspan="4"><a href="/edit/{{ buggy['id'] }}"><b>Edit Me</b></a></td>
       </tr>
       
 

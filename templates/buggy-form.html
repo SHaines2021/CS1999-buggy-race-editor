@@ -2,8 +2,11 @@
 
 {% block content %}
 
-  <h1>Create a New Buggy</h1>
-
+  {% if buggy %}
+    <h1>Update Buggy #{{buggy['id']}}</h1>
+  {% else %}
+    <h1>Create a New Buggy</h1>
+  {% endif %}
   <p>
     <a href="/" class="button">home</a>
   </p>
@@ -13,6 +16,10 @@
     <input type="submit" value="Submit Form" class="button">
     <input type="reset" value="Clear Changes" class="button">
     <input type="submit" name = "defaults" value="Apply Defaults" class="button">
+    <br>  
+    <input type="hidden" name="id" value="{{buggy['id']}}"/> 
+    </fieldset>
+    <br>
     <fieldset>
       <legend><b>Power Systems:</b></legend>
       <br>
