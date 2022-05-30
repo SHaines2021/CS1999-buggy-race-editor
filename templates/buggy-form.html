@@ -13,9 +13,10 @@
 
   <form action="/new" method="post">
     
-    <input type="submit" value="Submit Form" class="button">
+    <input type="submit" name = "submit_button" value="Submit Form" class="button">
     <input type="reset" value="Clear Changes" class="button">
-    <input type="submit" name = "defaults" value="Apply Defaults" class="button">
+    <input type="submit" name ="random_button" value="Submit a Random Buggy" class="button">
+    <input type="submit" name ="default_button" value="Submit a Default Buggy" class="button">
     <br>  
     <input type="hidden" name="id" value="{{buggy['id']}}"/> 
     </fieldset>
@@ -200,9 +201,11 @@
       <br><br>
     </fieldset>
   
-    <input type="submit" value="Submit Form" class="button">
+    <input type="submit" name = "submit_button" value="Submit Form" class="button">
     <input type="reset" value="Clear Changes" class="button">
-    <input type="defaults" value="Apply Defaults" class="button">
+    <input type="submit" name ="random_button" value="Submit a Random Buggy" class="button">
+    <input type="submit" name ="default_button" value="Submit a Default Buggy" class="button">
+    <br> 
   </form>
 
   <p>

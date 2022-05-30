@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 from urllib.request import urlopen
 import json
+import random
 import math
 import os
 import sqlite3 as sql
@@ -45,12 +46,13 @@ def create_buggy():
     elif request.method == 'POST':
         error = None
         msg=""
-        if request.form.get('defaults') == 'Apply Defaults':
+        buggy_id = request.form['id']
+        
+        if request.form.get('default_button') != None:
             url_default = "https://rhul.buggyrace.net/specs/data/defaults.json"
             response_def = urlopen(url_default)
             data_json_def = json.loads(response_def.read())
 
-            buggy_id = request.form['id']
             qty_wheels = str(data_json_def['qty_wheels'])
             power_type = str(data_json_def['power_type'])
             power_units = str(data_json_def['power_units'])
@@ -70,9 +72,43 @@ def create_buggy():
             antibiotic = str(data_json_def['antibiotic'])
             banging = str(data_json_def['banging'])
             algo = str(data_json_def['algo'])
+            pass
+        
+        elif request.form.get('random_button') != None:
+            power_list = ['petrol', 'fusion', 'steam', 'bio', 'electric', 'rocket', 'hamster', 'thermo', 'solar', 'wind']
+            #aux_power_list = ['none', 'petrol', 'fusion', 'steam', 'bio', 'electric', 'rocket', 'hamster', 'thermo', 'solar', 'wind']
+            color_list = ['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua']
+            #pattern_list = ['plain', 'vstripe', 'hstripe', 'dstripe', 'checker', 'spot']
+            tyres_list = ['knobbly', 'slick', 'steelband', 'reactive', 'maglev']
+            armour_list = ['none', 'wood', 'aluminium', 'thinsteel', 'thicksteel', 'titanium']
+            attack_list = ['none', 'spike', 'flame', 'charge', 'biohazard']
+            special_list = ['true','false']
+            algo_list = ['defensive', 'steady', 'offensive', 'titfortat', 'random', 'buggy']
+            qty_list = ['4','6','8','10']
+            unit_list = ['1','2','3','4','5','6','7','8','9','10']
+            qty_wheels = random.choice(qty_list)
+            power_type = random.choice(power_list)
+            power_units = random.choice(unit_list)
+            aux_power_type = random.choice(power_list)
+            aux_power_units = random.choice(unit_list)
+            hamster_booster = random.choice(unit_list)
+            flag_color = random.choice(color_list)
+            flag_pattern = 'plain'
+            flag_color_secondary = (random.choice(color_list))
+            tyres = (random.choice(tyres_list))
+            qty_tyres = qty_wheels
+            armour = (random.choice(armour_list))
+            attack = (random.choice(attack_list))
+            qty_attacks = (random.choice(unit_list))
+            fireproof = (random.choice(special_list))
+            insulated = (random.choice(special_list))
+            antibiotic = (random.choice(special_list))
+            banging = (random.choice(special_list))
+            algo = (random.choice(algo_list))
+            pass
+
 
         else:
-            buggy_id = request.form['id']
             qty_wheels = request.form['qty_wheels']
             power_type = request.form['power_type']
             power_units = request.form['power_units']
@@ -92,6 +128,7 @@ def create_buggy():
             antibiotic = request.form['antibiotic']
             banging = request.form['banging']
             algo = request.form['algo']
+            pass
 
 
         power_cost = data_json['power_type'][power_type]['cost']
@@ -193,7 +230,7 @@ def create_buggy():
             total_special_cost = (int(fireproof_cost)+int(insulated_cost)+int(antibiotic_cost)+int(banging_cost))
             total_cost = (int(total_power_cost)+int(total_tyres_cost)+int(total_offdef_cost)+int(total_special_cost))
             flash('Thanks! Data entered is valid!')
-            
+
             try:
                 with sql.connect(DATABASE_FILE) as con:
                     cur = con.cursor()
@@ -248,6 +285,21 @@ def edit_buggy(buggy_id):
     cur.execute("SELECT * FROM buggies WHERE ID=?", (buggy_id,))
     record = cur.fetchone();
     return render_template("buggy-form.html", buggy = record)
+
+#------------------------------------------------------------
+# a delete section 
+#------------------------------------------------------------
+@app.route('/delete/<buggy_id>')
+def delete_buggy(buggy_id):
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("DELETE FROM buggies WHERE ID=?", (buggy_id,))
+    con.commit()
+    cur.execute("SELECT * FROM buggies")
+    records = cur.fetchall();
+    msg = f"Success! Buggy #{buggy_id} deleted."
+    return render_template("buggy.html", buggies = records, msg=msg)
 
 #------------------------------------------------------------
 # You probably don't need to edit this... unless you want to ;)
