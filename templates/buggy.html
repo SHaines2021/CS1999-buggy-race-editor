@@ -68,17 +68,33 @@
           <td colspan="3"><b>Total Offensive and Defensive Cost:</b></td><td><b><u>{{ buggy['total_offdef_cost'] }}</u></b></td>
         </tr>
         <tr>
-          <td>Flag colour:</td> <td> {{ buggy['flag_color'] }} </td> <td>--</td>
+          <td>Flag colour:</td> <td> {{ buggy['flag_color'] }} </td> <td>--</td> 
         </tr>
         <tr>
           <td>Flag's pattern:</td> <td> {{ buggy['flag_pattern'] }} </td> <td>--</td>
         </tr>
         <tr>
           <td>Flag's other colour:</td> <td> {{ buggy['flag_color_secondary'] }} </td> <td>--</td>
+        </tr> 
+        <tr>
+          <td>Resulting Flag:</td>
+          {% if buggy['flag_pattern'] == 'plain' %}
+            <td colspan="3" style="height:100%; background: linear-gradient(to top, {{ buggy['flag_color_secondary'] }} 50%, {{ buggy['flag_color'] }} 50%); width:100px; height:70px;"></td>
+          {% elif buggy['flag_pattern'] == 'vstripe' %}
+            <td colspan="3" style="background: repeating-linear-gradient(90deg,{{ buggy['flag_color'] }},{{ buggy['flag_color'] }} 15px,{{ buggy['flag_color_secondary'] }} 15px,{{ buggy['flag_color_secondary'] }} 30px); width:100px; height:70px;"></td>
+          {% elif buggy['flag_pattern'] == 'hstripe' %}
+            <td colspan="3" style="background: repeating-linear-gradient({{ buggy['flag_color'] }},{{ buggy['flag_color'] }} 15px,{{ buggy['flag_color_secondary'] }} 15px,{{ buggy['flag_color_secondary'] }} 30px); width:100px; height:70px;"></td>
+          {% elif buggy['flag_pattern'] == 'dstripe' %}
+            <td colspan="3" style="background: repeating-linear-gradient(45deg,{{ buggy['flag_color'] }},{{ buggy['flag_color'] }} 15px,{{ buggy['flag_color_secondary'] }} 15px,{{ buggy['flag_color_secondary'] }} 30px); width:100px; height:70px;"></td>
+          {% elif buggy['flag_pattern'] == 'checker' %}
+            <td colspan="3" style="background-color: {{ buggy['flag_color'] }}; background-image: repeating-conic-gradient({{ buggy['flag_color'] }} 0% 25%, {{ buggy['flag_color_secondary'] }} 0% 50%); background-size: 35px 35px; background-repeat: repeat; width:100px; height:70px;"></td>
+          {% elif buggy['flag_pattern'] == 'spot' %}
+            <td colspan="3" style="background-color: {{ buggy['flag_color'] }}; background-image: radial-gradient({{ buggy['flag_color_secondary'] }} 35%, transparent 11%); background-size: 40px 40px; background-repeat: repeat; width:100px; height:70px;"></td>
+          {% endif %}
         </tr>
         <tr>
           <td colspan="3"><b>Total Vehicle Identification Cost:</b></td><td><b><u>0</u></b></td>
-        </tr>  
+        </tr> 
         <tr>
           <td>Fireproof?:</td> <td> {{ buggy['fireproof'] }} </td> <td>{{ buggy['fireproof_cost'] }}</td>
         </tr>

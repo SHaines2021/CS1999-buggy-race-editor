@@ -77,7 +77,7 @@ def create_buggy():
         elif request.form.get('random_button') != None:
             power_list = ['petrol', 'fusion', 'steam', 'bio', 'electric', 'rocket', 'hamster', 'thermo', 'solar', 'wind']
             #aux_power_list = ['none', 'petrol', 'fusion', 'steam', 'bio', 'electric', 'rocket', 'hamster', 'thermo', 'solar', 'wind']
-            color_list = ['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua']
+            color_list = ['#000000', '#808080','#FFFFFF','#800000','#FF0000','#800080','#FF00FF','#008000','#00FF00','#808000','#FFFF00','#000080','#0000FF','#008080','#00FFFF']
             #pattern_list = ['plain', 'vstripe', 'hstripe', 'dstripe', 'checker', 'spot']
             tyres_list = ['knobbly', 'slick', 'steelband', 'reactive', 'maglev']
             armour_list = ['none', 'wood', 'aluminium', 'thinsteel', 'thicksteel', 'titanium']
@@ -207,11 +207,10 @@ def create_buggy():
             flash(error)
             return render_template('buggy-form.html', buggy = record)
         #two flag colours required if flag pattern is not plain
-        elif flag_pattern != 'plain':
-            if flag_color == flag_color_secondary:
-                error = 'Oops! Please enter two different flag colours when not using the plain flag pattern. (flag_color)'
-                flash(error)
-                return render_template('buggy-form.html', buggy = record)
+        elif flag_pattern != 'plain' and flag_color == flag_color_secondary:
+            error = 'Oops! Please enter two different flag colours when not using the plain flag pattern. (flag_color)'
+            flash(error)
+            return render_template('buggy-form.html', buggy = record)
         #are there equal number or more tyres than wheels?
         elif int(qty_tyres)<int(qty_wheels):
             error = 'Oops! Please enter an equal or greater number of tyres than wheels. (qty_tyres)'
