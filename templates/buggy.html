@@ -5,122 +5,124 @@
 {{msg}}
 
 <h1>All Buggies</h1>
-  {% if buggy %}
-    <h3>Oops! No buggies available to view. Please add a new buggy.</h3>
-    <br>
+
+{% for buggy in buggies %}
+  {% if buggy['id'] == 0 %}
+  <!-- Note: Buggy #0 is the default buggy, which is not displayed. -->
+    <p>Default Buggy Loaded OK.</p>
     <p>
-     <a href="/new" class="button">Make buggy</a>
+    <a href="/new" class="button">Make a New Buggy</a>
     </p>
     <br>
   {% else %}
-    {% for buggy in buggies %}
-      <table>
+    <table>
 
-        <tr>
-          <td>Reference</td> <td>Value</td> <td>Cost</td><td>Total Costs</td>
-        </tr>
-        <tr>
-          <td>ID:</td> <td><b> {{ buggy['id'] }} </b></td> <td>--</td>
-        </tr>
-        <tr>
-          <td>Primary motive power:</td> <td> {{ buggy['power_type'] }} </td> <td>{{ buggy['power_cost'] }}</td> 
-        </tr>
-        <tr>
-          <td>Primary motive power units:</td> <td> {{ buggy['power_units'] }} </td><td>--</td>
-        </tr>
-        <tr>
-          <td>Auxiliary motive power:</td> <td> {{ buggy['aux_power_type'] }} </td> <td>{{ buggy['aux_power_cost'] }}</td>
-        </tr>
-        <tr>
-          <td>Auxiliary motive power units:</td> <td> {{ buggy['aux_power_units'] }} </td> <td>--</td>
-        </tr>
-        <tr>
-          <td>Hamster booster:</td> <td> {{ buggy['hamster_booster'] }} </td> <td>{{ buggy['hamster_cost'] }}</td>
-        </tr>
-        <tr>
-          <td colspan="3"><b>Total Power Cost:</b></td><td><b><u>{{ buggy['total_power_cost'] }}</u></b></td>
-        </tr>
-        <tr>
-          <td>Wheels:</td> <td> {{ buggy['qty_wheels'] }} </td><td>--</td>
-        </tr>
-        <tr>
-          <td>Type of tyres:</td> <td> {{ buggy['tyres'] }} </td> <td> {{ buggy['tyres_cost'] }} </td> 
-        </tr>
-        <tr>
-          <td>Number of tyres:</td> <td> {{ buggy['qty_tyres'] }} </td> <td>--</td>
-        </tr>
-        <tr>
-          <td colspan="3"><b>Total Traction Cost:</b></td><td><b><u>{{ buggy['total_tyres_cost'] }}</u></b></td>
-        </tr>
-        <tr>
-          <td>Armour:</td> <td> {{ buggy['armour'] }} </td> <td>{{ buggy['armour_cost'] }}</td
-        </tr>
-        <tr>
-          <td>Offensive capability:</td> <td> {{ buggy['attack'] }} </td> <td>{{ buggy['attack_cost'] }}</td>
-        </tr>
-        <tr>
-          <td>Number of attacks:</td> <td> {{ buggy['qty_attacks'] }} </td> <td>--</td>
-        </tr>
-        <tr>
-          <td>Race computer algorithm:</td> <td> {{ buggy['algo'] }} </td> <td>{{ buggy['algo_cost'] }}</td>
-        </tr>
-        <tr>
-          <td colspan="3"><b>Total Offensive and Defensive Cost:</b></td><td><b><u>{{ buggy['total_offdef_cost'] }}</u></b></td>
-        </tr>
-        <tr>
-          <td>Flag colour:</td> <td> {{ buggy['flag_color'] }} </td> <td>--</td> 
-        </tr>
-        <tr>
-          <td>Flag's pattern:</td> <td> {{ buggy['flag_pattern'] }} </td> <td>--</td>
-        </tr>
-        <tr>
-          <td>Flag's other colour:</td> <td> {{ buggy['flag_color_secondary'] }} </td> <td>--</td>
-        </tr> 
-        <tr>
-          <td>Resulting Flag:</td>
-          {% if buggy['flag_pattern'] == 'plain' %}
-            <td colspan="3" style="height:100%; background: linear-gradient(to top, {{ buggy['flag_color_secondary'] }} 50%, {{ buggy['flag_color'] }} 50%); width:100px; height:70px;"></td>
-          {% elif buggy['flag_pattern'] == 'vstripe' %}
-            <td colspan="3" style="background: repeating-linear-gradient(90deg,{{ buggy['flag_color'] }},{{ buggy['flag_color'] }} 15px,{{ buggy['flag_color_secondary'] }} 15px,{{ buggy['flag_color_secondary'] }} 30px); width:100px; height:70px;"></td>
-          {% elif buggy['flag_pattern'] == 'hstripe' %}
-            <td colspan="3" style="background: repeating-linear-gradient({{ buggy['flag_color'] }},{{ buggy['flag_color'] }} 15px,{{ buggy['flag_color_secondary'] }} 15px,{{ buggy['flag_color_secondary'] }} 30px); width:100px; height:70px;"></td>
-          {% elif buggy['flag_pattern'] == 'dstripe' %}
-            <td colspan="3" style="background: repeating-linear-gradient(45deg,{{ buggy['flag_color'] }},{{ buggy['flag_color'] }} 15px,{{ buggy['flag_color_secondary'] }} 15px,{{ buggy['flag_color_secondary'] }} 30px); width:100px; height:70px;"></td>
-          {% elif buggy['flag_pattern'] == 'checker' %}
-            <td colspan="3" style="background-color: {{ buggy['flag_color'] }}; background-image: repeating-conic-gradient({{ buggy['flag_color'] }} 0% 25%, {{ buggy['flag_color_secondary'] }} 0% 50%); background-size: 35px 35px; background-repeat: repeat; width:100px; height:70px;"></td>
-          {% elif buggy['flag_pattern'] == 'spot' %}
-            <td colspan="3" style="background-color: {{ buggy['flag_color'] }}; background-image: radial-gradient({{ buggy['flag_color_secondary'] }} 35%, transparent 11%); background-size: 40px 40px; background-repeat: repeat; width:100px; height:70px;"></td>
-          {% endif %}
-        </tr>
-        <tr>
-          <td colspan="3"><b>Total Vehicle Identification Cost:</b></td><td><b><u>0</u></b></td>
-        </tr> 
-        <tr>
-          <td>Fireproof?:</td> <td> {{ buggy['fireproof'] }} </td> <td>{{ buggy['fireproof_cost'] }}</td>
-        </tr>
-        <tr>
-          <td>Insulated?:</td> <td> {{ buggy['insulated'] }} </td> <td>{{ buggy['insulated_cost'] }}</td>
-        </tr>
-        <tr>
-          <td>Antibiotic?:</td> <td> {{ buggy['antibiotic'] }} </td> <td>{{ buggy['antibiotic_cost'] }}</td>
-        </tr>
-        <tr>
-          <td>Banging sound system?:</td> <td> {{ buggy['banging'] }} </td> <td>{{ buggy['banging_cost'] }}</td>
-        </tr>
-        <tr>
-          <td colspan="3"><b>Total Special Systems Cost:</b></td><td><b><u>{{ buggy['total_special_cost'] }}</u></b></td>
-        </tr>
-        <tr>
-          <td colspan="3"><b>Overall Total Cost:</b></td><td><b><u>{{ buggy['total_cost'] }}</u></b></td>
-        </tr>
-        <tr>
-          <td colspan="2"><a href="/edit/{{ buggy['id'] }}"><b>Edit Me</b></a></td><td colspan="2"><a href="/delete/{{ buggy['id'] }}"><b>Delete Me</b></a></td>
-        </tr>
-        
+      <tr>
+        <td>Reference</td> <td>Value</td> <td>Cost</td><td>Total Costs</td>
+      </tr>
+      <tr>
+        <td>ID:</td> <td><b> {{ buggy['id'] }} </b></td> <td>--</td>
+      </tr>
+      <tr>
+        <td>Primary motive power:</td> <td> {{ buggy['power_type'] }} </td> <td>{{ buggy['power_cost'] }}</td> 
+      </tr>
+      <tr>
+        <td>Primary motive power units:</td> <td> {{ buggy['power_units'] }} </td><td>--</td>
+      </tr>
+      <tr>
+        <td>Auxiliary motive power:</td> <td> {{ buggy['aux_power_type'] }} </td> <td>{{ buggy['aux_power_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Auxiliary motive power units:</td> <td> {{ buggy['aux_power_units'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td>Hamster booster:</td> <td> {{ buggy['hamster_booster'] }} </td> <td>{{ buggy['hamster_cost'] }}</td>
+      </tr>
+      <tr>
+        <td colspan="3"><b>Total Power Cost:</b></td><td><b><u>{{ buggy['total_power_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td>Wheels:</td> <td> {{ buggy['qty_wheels'] }} </td><td>--</td>
+      </tr>
+      <tr>
+        <td>Type of tyres:</td> <td> {{ buggy['tyres'] }} </td> <td> {{ buggy['tyres_cost'] }} </td> 
+      </tr>
+      <tr>
+        <td>Number of tyres:</td> <td> {{ buggy['qty_tyres'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td colspan="3"><b>Total Traction Cost:</b></td><td><b><u>{{ buggy['total_tyres_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td>Armour:</td> <td> {{ buggy['armour'] }} </td> <td>{{ buggy['armour_cost'] }}</td
+      </tr>
+      <tr>
+        <td>Offensive capability:</td> <td> {{ buggy['attack'] }} </td> <td>{{ buggy['attack_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Number of attacks:</td> <td> {{ buggy['qty_attacks'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td>Race computer algorithm:</td> <td> {{ buggy['algo'] }} </td> <td>{{ buggy['algo_cost'] }}</td>
+      </tr>
+      <tr>
+        <td colspan="3"><b>Total Offensive and Defensive Cost:</b></td><td><b><u>{{ buggy['total_offdef_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td>Flag colour:</td> <td> {{ buggy['flag_color'] }} </td> <td>--</td> 
+      </tr>
+      <tr>
+        <td>Flag's pattern:</td> <td> {{ buggy['flag_pattern'] }} </td> <td>--</td>
+      </tr>
+      <tr>
+        <td>Flag's other colour:</td> <td> {{ buggy['flag_color_secondary'] }} </td> <td>--</td>
+      </tr> 
+      <tr>
+        <td>Resulting Flag:</td>
+        {% if buggy['flag_pattern'] == 'plain' %}
+          <td colspan="3" style="height:100%; background: linear-gradient(to top, {{ buggy['flag_color_secondary'] }} 50%, {{ buggy['flag_color'] }} 50%); width:100px; height:70px;"></td>
+        {% elif buggy['flag_pattern'] == 'vstripe' %}
+          <td colspan="3" style="background: repeating-linear-gradient(90deg,{{ buggy['flag_color'] }},{{ buggy['flag_color'] }} 15px,{{ buggy['flag_color_secondary'] }} 15px,{{ buggy['flag_color_secondary'] }} 30px); width:100px; height:70px;"></td>
+        {% elif buggy['flag_pattern'] == 'hstripe' %}
+          <td colspan="3" style="background: repeating-linear-gradient({{ buggy['flag_color'] }},{{ buggy['flag_color'] }} 15px,{{ buggy['flag_color_secondary'] }} 15px,{{ buggy['flag_color_secondary'] }} 30px); width:100px; height:70px;"></td>
+        {% elif buggy['flag_pattern'] == 'dstripe' %}
+          <td colspan="3" style="background: repeating-linear-gradient(45deg,{{ buggy['flag_color'] }},{{ buggy['flag_color'] }} 15px,{{ buggy['flag_color_secondary'] }} 15px,{{ buggy['flag_color_secondary'] }} 30px); width:100px; height:70px;"></td>
+        {% elif buggy['flag_pattern'] == 'checker' %}
+          <td colspan="3" style="background-color: {{ buggy['flag_color'] }}; background-image: repeating-conic-gradient({{ buggy['flag_color'] }} 0% 25%, {{ buggy['flag_color_secondary'] }} 0% 50%); background-size: 35px 35px; background-repeat: repeat; width:100px; height:70px;"></td>
+        {% elif buggy['flag_pattern'] == 'spot' %}
+          <td colspan="3" style="background-color: {{ buggy['flag_color'] }}; background-image: radial-gradient({{ buggy['flag_color_secondary'] }} 35%, transparent 11%); background-size: 40px 40px; background-repeat: repeat; width:100px; height:70px;"></td>
+        {% endif %}
+      </tr>
+      <tr>
+        <td colspan="3"><b>Total Vehicle Identification Cost:</b></td><td><b><u>0</u></b></td>
+      </tr> 
+      <tr>
+        <td>Fireproof?:</td> <td> {{ buggy['fireproof'] }} </td> <td>{{ buggy['fireproof_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Insulated?:</td> <td> {{ buggy['insulated'] }} </td> <td>{{ buggy['insulated_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Antibiotic?:</td> <td> {{ buggy['antibiotic'] }} </td> <td>{{ buggy['antibiotic_cost'] }}</td>
+      </tr>
+      <tr>
+        <td>Banging sound system?:</td> <td> {{ buggy['banging'] }} </td> <td>{{ buggy['banging_cost'] }}</td>
+      </tr>
+      <tr>
+        <td colspan="3"><b>Total Special Systems Cost:</b></td><td><b><u>{{ buggy['total_special_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td colspan="3"><b>Overall Total Cost:</b></td><td><b><u>{{ buggy['total_cost'] }}</u></b></td>
+      </tr>
+      <tr>
+        <td colspan="2"><a href="/edit/{{ buggy['id'] }}"><b>Edit Me</b></a></td><td colspan="2"><a href="/delete/{{ buggy['id'] }}"><b>Delete Me</b></a></td>
+      </tr>
+      
 
-      </table>
-    {% endfor %}
-  {% endif %}
+    </table>
+    {%endif%}
+{% endfor %}
+
 
   <p>
     <a href="/" class="button">home</a>

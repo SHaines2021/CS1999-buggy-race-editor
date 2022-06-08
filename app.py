@@ -8,6 +8,7 @@ import sqlite3 as sql
 
 # app - The flask application where all the magical things are configured.
 app = Flask(__name__)
+#secret key required to utlise the session's cookie for flash messages.
 app.secret_key='12345'
 
 # Constants - Stuff that we need to know that won't ever change!
@@ -23,6 +24,15 @@ BUGGY_RACE_SERVER_URL = "https://rhul.buggyrace.net"
 def home():
     return render_template('index.html', server_url=BUGGY_RACE_SERVER_URL)
 
+
+#------------------------------------------------------------
+# the poster page
+#------------------------------------------------------------
+@app.route('/poster')
+def poster():
+    return render_template('poster.html')
+
+
 #------------------------------------------------------------
 # creating a new buggy:
 #  if it's a POST request process the submitted data
@@ -30,29 +40,46 @@ def home():
 #------------------------------------------------------------
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
+    #this variable holds the url for the buggy race server's json API that gives all the buggy spec variables.
     url = "https://rhul.buggyrace.net/specs/data/types.json"
+    #open the page 
     response = urlopen(url)
+    #load the json from the read page. This variable will be used extensively for referencing individual specifications
     data_json = json.loads(response.read())
-    
+
+
+    #this block connects to the SQL database and gets the first row and turns it into a dictionary like object (here: 'record')
+    #This record give what is the default buggy record
     con = sql.connect(DATABASE_FILE)
     con.row_factory = sql.Row
     cur = con.cursor()
     cur.execute("SELECT * FROM buggies")
     record = cur.fetchone();
-
+    
+    
     if request.method == 'GET':
-        return render_template("buggy-form.html", buggy = None)
-            
+        #convert the sql dictionary-type object to an actual python dictionary
+        record=dict(record)
+        #delete the id present in the record
+        del record['id']
+        #load the buggy form template with this record as buggy, which gives the whole form filled with the default buggy but without an id for the new buggy creation
+        return render_template("buggy-form.html", buggy = record)
+
     elif request.method == 'POST':
+        #intialise without error or msg
         error = None
         msg=""
+        #buggy id from the buggy form
         buggy_id = request.form['id']
-        
+
+        #if button pressed for default_buggy, then as follows
         if request.form.get('default_button') != None:
+            #import the json data from the server API, specificly the defaults only
             url_default = "https://rhul.buggyrace.net/specs/data/defaults.json"
             response_def = urlopen(url_default)
             data_json_def = json.loads(response_def.read())
-
+            
+            #import each variable from the server defults, as strings
             qty_wheels = str(data_json_def['qty_wheels'])
             power_type = str(data_json_def['power_type'])
             power_units = str(data_json_def['power_units'])
@@ -73,12 +100,12 @@ def create_buggy():
             banging = str(data_json_def['banging'])
             algo = str(data_json_def['algo'])
             pass
-        
+
         elif request.form.get('random_button') != None:
             power_list = ['petrol', 'fusion', 'steam', 'bio', 'electric', 'rocket', 'hamster', 'thermo', 'solar', 'wind']
-            #aux_power_list = ['none', 'petrol', 'fusion', 'steam', 'bio', 'electric', 'rocket', 'hamster', 'thermo', 'solar', 'wind']
+            aux_power_list = ['none', 'petrol', 'fusion', 'steam', 'bio', 'electric', 'rocket', 'hamster', 'thermo', 'solar', 'wind']
             color_list = ['#000000', '#808080','#FFFFFF','#800000','#FF0000','#800080','#FF00FF','#008000','#00FF00','#808000','#FFFF00','#000080','#0000FF','#008080','#00FFFF']
-            #pattern_list = ['plain', 'vstripe', 'hstripe', 'dstripe', 'checker', 'spot']
+            pattern_list = ['plain', 'vstripe', 'hstripe', 'dstripe', 'checker', 'spot']
             tyres_list = ['knobbly', 'slick', 'steelband', 'reactive', 'maglev']
             armour_list = ['none', 'wood', 'aluminium', 'thinsteel', 'thicksteel', 'titanium']
             attack_list = ['none', 'spike', 'flame', 'charge', 'biohazard']
@@ -89,12 +116,19 @@ def create_buggy():
             qty_wheels = random.choice(qty_list)
             power_type = random.choice(power_list)
             power_units = random.choice(unit_list)
-            aux_power_type = random.choice(power_list)
-            aux_power_units = random.choice(unit_list)
+            aux_power_type = random.choice(aux_power_list)
+            if aux_power_type == 'none':
+                aux_power_units = 0
+            else:
+                aux_power_units = random.choice(unit_list)
             hamster_booster = random.choice(unit_list)
             flag_color = random.choice(color_list)
-            flag_pattern = 'plain'
-            flag_color_secondary = (random.choice(color_list))
+            flag_pattern = random.choice(pattern_list)
+            if flag_pattern != 'plain':
+                second_color_list = [value for value in color_list if value != flag_color]
+                flag_color_secondary = (random.choice(second_color_list))
+            else:
+                flag_color_secondary = (random.choice(color_list))
             tyres = (random.choice(tyres_list))
             qty_tyres = qty_wheels
             armour = (random.choice(armour_list))
@@ -137,9 +171,9 @@ def create_buggy():
         else:
             aux_power_cost = data_json['power_type'][aux_power_type]['cost']
         hamster_cost = data_json['special']['hamster_booster']['cost']
-        tyres_cost = data_json['tyres'][tyres]['cost']  
-        armour_cost = data_json['armour'][armour]['cost'] 
-        attack_cost = data_json['attack'][attack]['cost']     
+        tyres_cost = data_json['tyres'][tyres]['cost']
+        armour_cost = data_json['armour'][armour]['cost']
+        attack_cost = data_json['attack'][attack]['cost']
         algo_cost = data_json['algo'][algo]['cost']
         if fireproof == 'false':
             fireproof_cost = '0'
@@ -158,69 +192,135 @@ def create_buggy():
         else:
             banging_cost = data_json['special']['banging']['cost']
 
-
         
+        
+
         # data validation:
         #is the entered data an integer?
         if qty_wheels.isdigit() is False:
             error = 'Oops! Incorrect type of data entered, please enter an integer. (qty_wheels)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         elif power_units.isdigit() is False:
             error = 'Oops! Incorrect type of data entered, please enter an integer. (power_units)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         elif aux_power_units.isdigit() is False:
             error = 'Oops! Incorrect type of data entered, please enter an integer. (aux_power_units)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         elif hamster_booster.isdigit() is False:
             error = 'Oops! Incorrect type of data entered, please enter an integer. (hamster_booster)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         elif qty_tyres.isdigit() is False:
             error = 'Oops! Incorrect type of data entered, please enter an integer. (qty_tyres)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         elif qty_attacks.isdigit() is False:
             error = 'Oops! Incorrect type of data entered, please enter an integer. (qty_attacks)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         #are there 4 or more wheels?
         elif int(qty_wheels)<=3:
             error = 'Oops! Please enter 4 or more wheels. (qty_wheels)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         #are the wheels an even number?
         elif int(qty_wheels)%2 !=0:
             error = 'Oops! Please enter an even number of wheels. (qty_wheels)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         #at least 1 unit of power?
         elif int(power_units)<1:
             error = 'Oops! Please enter at least 1 unit of power. (power_units)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         #at least 0 units of power?
         elif int(aux_power_units)<0:
             error = 'Oops! Please enter at least 0 units of aux power. (aux_power_units)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         #two flag colours required if flag pattern is not plain
         elif flag_pattern != 'plain' and flag_color == flag_color_secondary:
             error = 'Oops! Please enter two different flag colours when not using the plain flag pattern. (flag_color)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         #are there equal number or more tyres than wheels?
         elif int(qty_tyres)<int(qty_wheels):
             error = 'Oops! Please enter an equal or greater number of tyres than wheels. (qty_tyres)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
         #at least 0 units of attack?
         elif int(qty_attacks)<0:
             error = 'Oops! Please enter at least 0 attacks. (qty_attacks)'
             flash(error)
-            return render_template('buggy-form.html', buggy = record)
+            if buggy_id == '':
+                record=dict(record)
+                del record['id']
+                return render_template('buggy-form.html', buggy = record)
+            else:
+                return render_template('buggy-form.html', buggy = record)
 
         else:
             total_power_cost = ((int(power_units) * int(power_cost)) + (int(aux_power_units) * int(aux_power_cost))+(int(hamster_booster)*int(hamster_cost)))
@@ -251,7 +351,7 @@ def create_buggy():
             finally:
                 con.close()
             return render_template("updated.html", msg = msg)
-        
+
 
 #------------------------------------------------------------
 # a page for displaying the buggy
@@ -286,7 +386,7 @@ def edit_buggy(buggy_id):
     return render_template("buggy-form.html", buggy = record)
 
 #------------------------------------------------------------
-# a delete section 
+# a delete section
 #------------------------------------------------------------
 @app.route('/delete/<buggy_id>')
 def delete_buggy(buggy_id):

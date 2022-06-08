@@ -2,11 +2,12 @@
 
 {% block content %}
 
-  {% if buggy %}
+  {% if buggy['id'] != Null %}
     <h1>Update Buggy #{{buggy['id']}}</h1>
   {% else %}
     <h1>Create a New Buggy</h1>
   {% endif %}
+
   <p>
     <a href="/" class="button">home</a>
   </p>
