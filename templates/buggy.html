@@ -6,13 +6,17 @@
 
 <h1>All Buggies</h1>
 
+<div class="spacer">
+  <a href="/" class="button">Home</a>
+  <a href="/new" class="button">Make a New Buggy</a>
+  <a href="/json" class="button">Get buggy JSON</a>
+</div>
+
 {% for buggy in buggies %}
   {% if buggy['id'] == 0 %}
   <!-- Note: Buggy #0 is the default buggy, which is not displayed. -->
     <p>Default Buggy Loaded OK.</p>
-    <p>
-    <a href="/new" class="button">Make a New Buggy</a>
-    </p>
+    
     <br>
   {% else %}
     <table>
@@ -115,7 +119,7 @@
         <td colspan="3"><b>Overall Total Cost:</b></td><td><b><u>{{ buggy['total_cost'] }}</u></b></td>
       </tr>
       <tr>
-        <td colspan="2"><a href="/edit/{{ buggy['id'] }}"><b>Edit Me</b></a></td><td colspan="2"><a href="/delete/{{ buggy['id'] }}"><b>Delete Me</b></a></td>
+        <td colspan="1"><a href="/edit/{{ buggy['id'] }}"><b>Edit Me</b></a></td><td colspan="2"><a href="/json/{{ buggy['id'] }}"><b>Show JSON</b></a></td><td><a href="/delete/{{ buggy['id'] }}"><b>Delete Me</b></a></td>
       </tr>
       
 

@@ -401,23 +401,33 @@ def delete_buggy(buggy_id):
     return render_template("buggy.html", buggies = records, msg=msg)
 
 #------------------------------------------------------------
-# You probably don't need to edit this... unless you want to ;)
-#
-# get JSON from current record
-#  This reads the buggy record from the database, turns it
-#  into JSON format (excluding any empty values), and returns
-#  it. There's no .html template here because it's *only* returning
-#  the data, so in effect jsonify() is rendering the data.
+# render json template to select buggy to view json data export
+
 #------------------------------------------------------------
 @app.route('/json')
 def summary():
     con = sql.connect(DATABASE_FILE)
     con.row_factory = sql.Row
     cur = con.cursor()
-    cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (DEFAULT_BUGGY_ID))
+    cur.execute("SELECT * FROM buggies")
+    records = cur.fetchall();
+    return render_template("json.html", buggies = records)
 
+#------------------------------------------------------------
+# extension of json route with individual json being selected for export
+
+#------------------------------------------------------------
+
+@app.route('/json/<buggy_id>')
+def summary_json(buggy_id):
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (buggy_id,))
     buggies = dict(zip([column[0] for column in cur.description], cur.fetchone())).items()
-    return jsonify({ key: val for key, val in buggies if (val != "" and val is not None) })
+    return jsonify({ key: val for key, val in buggies if (val != "" and val is not None)})
+
+#------------------------------------------------------------
 
 # You shouldn't need to add anything below this!
 if __name__ == '__main__':
