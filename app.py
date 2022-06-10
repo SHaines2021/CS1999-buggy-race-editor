@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 import json
 import random
 import math
@@ -41,7 +41,7 @@ def poster():
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
     #this variable holds the url for the buggy race server's json API that gives all the buggy spec variables.
-    url = "https://rhul.buggyrace.net/specs/data/types.json"
+    url = Request("https://rhul.buggyrace.net/specs/data/types.json", headers={'User-Agent': 'Mozilla/5.0'})
     #open the page 
     response = urlopen(url)
     #load the json from the read page. This variable will be used extensively for referencing individual specifications
