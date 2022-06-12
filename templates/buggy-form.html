@@ -2,6 +2,7 @@
 
 {% block content %}
 
+  <!-- if to specify if the title is for a new or update buggy. Determined by the precence of buggy id in the record-->
   {% if buggy['id'] != Null %}
     <h1>Update Buggy #{{buggy['id']}}</h1>
   {% else %}
@@ -12,21 +13,31 @@
     <a href="/" class="button">Return Home</a>
   </p>
 
+  <!-- form to carry the content of the form -->
   <form action="/new" method="post">
-    
+    <!-- buttons to manage the onward functionality of the page -->
+    <!-- submit the data in the form -->
     <input type="submit" name = "submit_button" value="Submit Form" class="button">
+    <!-- clear all changes in the page (this is dynamic and doesn't require a page reload) -->
     <input type="reset" value="Clear Changes" class="button">
+    <!-- Generate a random buggy and subimt directly to the database -->
     <input type="submit" name ="random_button" value="Submit a Random Buggy" class="button">
+    <!-- Generate a default buggy and subimt directly to the database -->
     <input type="submit" name ="default_button" value="Submit a Default Buggy" class="button">
     <br>  
+    <!-- buggy id part of the record but hidden from the user to allow for automatic population -->
     <input type="hidden" name="id" value="{{buggy['id']}}"/> 
-    </fieldset>
+    
     <br>
+    <!-- fieldsets allow for the sub-division of the form into related selections -->
     <fieldset>
+      <!-- title of the fieldset -->
       <legend><b>Power Systems:</b></legend>
       <br>
+      <!-- title of the form item -->
       <label for="power_type">Primary motive power:</label>
       <br>
+      <!-- dropdown list with all variables, the selected option being the item from the buggy record -->
       <select id="power_type" name="power_type">
         <option value="{{buggy['power_type']}}" selected>{{buggy['power_type']}}</option>
         <option value="petrol">petrol</option>
@@ -43,6 +54,7 @@
       <br><br>
       <label for="power_units">Primary motive power units:</label>
       <br>
+      <!-- text imput allows for user imput of the unit value -->
       <input type="text" name="power_units" value="{{buggy['power_units']}}"/>    
       <br><br>
       <label for="aux_power_type">Auxiliary motive power:</label>
@@ -145,6 +157,7 @@
       <br>
       <label for="flag_color">Flag's colour:</label>
       <br>
+      <!-- colour input type in html allows for a pop up box of possible/valid colours -->
       <input type="color" name="flag_color" value="{{buggy['flag_color']}}"/>
       <br><br>
       <label for="flag_pattern">Flag's pattern:</label>
@@ -170,6 +183,7 @@
       <br>
       <label for="fireproof">Fireproof?:</label>
       <br>
+      <!-- boolean values here also in drop down menus -->
       <select id="fireproof" name="fireproof">
         <option value="{{buggy['fireproof']}}" selected>{{buggy['fireproof']}}</option>
         <option value="false">false</option>
@@ -201,7 +215,7 @@
       </select>
       <br><br>
     </fieldset>
-  
+  <!-- navigation and submit buttons here also repeated at the bottom of the form for ease of use -->
     <input type="submit" name = "submit_button" value="Submit Form" class="button">
     <input type="reset" value="Clear Changes" class="button">
     <input type="submit" name ="random_button" value="Submit a Random Buggy" class="button">

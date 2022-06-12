@@ -6,17 +6,21 @@
 
 <h1>Get Buggy JSON</h1>
 
+<!-- navigation links for ease of use and onward navigation -->
 <div class="spacer">
     <a href="/" class="button">Return Home</a>
     <a href="/new" class="button">Make a New Buggy</a>
     <a href="/buggy" class="button">Show buggy</a>
 </div>
+<!-- the following code is looped for each buggy record in the buggies database -->
 {% for buggy in buggies %}
   {% if buggy['id'] == 0 %}
   <!-- Note: Buggy #0 is the default buggy, which is not displayed -->
   {% else %}
 
     <table>
+    <!-- table containing the relevant buggy's details -->
+    <!-- details displayed are the buggy ID and the flag -->
 
         <tr>
             <td>ID:</td> <td><b> {{ buggy['id'] }} </b></td> 
@@ -38,6 +42,7 @@
             {% endif %}
           </tr>
         <tr>
+          <!-- link to show the JSON raw data page, as generated from the database with this buggy id -->
             <td colspan="2"><a href="/json/{{ buggy['id'] }}"><b>Show JSON</b></a></td>
         </tr>
 

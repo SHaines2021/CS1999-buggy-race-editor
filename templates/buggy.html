@@ -6,19 +6,22 @@
 
 <h1>All Buggies</h1>
 
+<!-- navigation buttons for ease of use to relevant onward pages -->
 <div class="spacer">
   <a href="/" class="button">Return Home</a>
   <a href="/new" class="button">Make a New Buggy</a>
   <a href="/json" class="button">Get Buggy JSON</a>
 </div>
 
+<!-- this page is looped through for each buggy record in the buggies database -->
 {% for buggy in buggies %}
   {% if buggy['id'] == 0 %}
-  <!-- Note: Buggy #0 is the default buggy, which is not displayed. -->
+  <!-- Note: Buggy #0 is the default buggy, which is not displayed. This may effect functionality if it is deleted so a message confirms its existance -->
     <p>Default Buggy Loaded OK.</p>
     
     <br>
   {% else %}
+  <!-- table contains all data for each buggy, all data is imported from that record with the dictionary-type look up -->
     <table>
 
       <tr>
@@ -43,6 +46,7 @@
         <td>Hamster booster:</td> <td> {{ buggy['hamster_booster'] }} </td> <td>{{ buggy['hamster_cost'] }}</td>
       </tr>
       <tr>
+        <!-- summary section sub-costs are included with wider column spans for clarity -->
         <td colspan="3"><b>Total Power Cost:</b></td><td><b><u>{{ buggy['total_power_cost'] }}</u></b></td>
       </tr>
       <tr>
@@ -82,6 +86,8 @@
         <td>Flag's other colour:</td> <td> {{ buggy['flag_color_secondary'] }} </td> <td>--</td>
       </tr> 
       <tr>
+        <!-- flag representation is managed by div css style, this is because it is only used in a single place so not worth adding the the master css sheet.
+          The div is selected by an if statement about the relevant flag pattern.   -->
         <td>Resulting Flag:</td>
         {% if buggy['flag_pattern'] == 'plain' %}
           <td colspan="3" style="height:100%; background: linear-gradient(to top, {{ buggy['flag_color_secondary'] }} 50%, {{ buggy['flag_color'] }} 50%); width:100px; height:70px;"></td>
@@ -119,6 +125,7 @@
         <td colspan="3"><b>Overall Total Cost:</b></td><td><b><u>{{ buggy['total_cost'] }}</u></b></td>
       </tr>
       <tr>
+        <!-- edit/json/delete links are given at the end of each record for onward navigation-->
         <td colspan="1"><a href="/edit/{{ buggy['id'] }}"><b>Edit Me</b></a></td><td colspan="2"><a href="/json/{{ buggy['id'] }}"><b>Show JSON</b></a></td><td><a href="/delete/{{ buggy['id'] }}"><b>Delete Me</b></a></td>
       </tr>
       

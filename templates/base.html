@@ -8,6 +8,7 @@
   </head>
   <body>
     <div class="main-content">
+      <!-- inclusion of flash messages into the format of all pages, where provided -->
       {% with messages = get_flashed_messages() %}
         {% if messages %}
           <ul class=flashes>
