@@ -31,9 +31,9 @@ connection.execute("""
     aux_power_type        VARCHAR(20) DEFAULT 'none',
     aux_power_units       INTEGER DEFAULT 0,
     hamster_booster       INTEGER DEFAULT 0,
-    flag_color            VARCHAR(20) DEFAULT 'white',
+    flag_color            VARCHAR(20) DEFAULT '#ffffff',
     flag_pattern          VARCHAR(20) DEFAULT 'plain',
-    flag_color_secondary  VARCHAR(20) DEFAULT 'black',
+    flag_color_secondary  VARCHAR(20) DEFAULT '#000000',
     tyres                 VARCHAR(20) DEFAULT 'knobbly',
     qty_tyres             INTEGER DEFAULT 4,
     armour                VARCHAR(20) DEFAULT 'none',
@@ -71,7 +71,7 @@ cursor = connection.cursor()
 cursor.execute("SELECT * FROM buggies LIMIT 1")
 rows = cursor.fetchall()
 if len(rows) == 0:
-  cursor.execute("INSERT INTO buggies (qty_wheels, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_pattern, flag_color_secondary, tyres, qty_tyres, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, power_cost, aux_power_cost, hamster_cost, tyres_cost, armour_cost, attack_cost, algo_cost, fireproof_cost, insulated_cost, antibiotic_cost, banging_cost, total_power_cost, total_tyres_cost, total_offdef_cost, total_special_cost, total_cost, id) VALUES (4, 'petrol', 1, 'none', 0, 0, 'white', 'plain', 'black', 'knobbly', 4, 'none', 'none', 0, 'false', 'false', 'false', 'false', 'steady', 4, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 4, 60, 0, 0, 64, 0)")
+  cursor.execute("INSERT INTO buggies (qty_wheels, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_pattern, flag_color_secondary, tyres, qty_tyres, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, power_cost, aux_power_cost, hamster_cost, tyres_cost, armour_cost, attack_cost, algo_cost, fireproof_cost, insulated_cost, antibiotic_cost, banging_cost, total_power_cost, total_tyres_cost, total_offdef_cost, total_special_cost, total_cost, id) VALUES (4, 'petrol', 1, 'none', 0, 0, '#ffffff', 'plain', '#000000', 'knobbly', 4, 'none', 'none', 0, 'false', 'false', 'false', 'false', 'steady', 4, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 4, 60, 0, 0, 64, 0)")
   connection.commit()
   print("- Added one default buggy")
 else:
