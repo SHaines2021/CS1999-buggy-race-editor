@@ -42,7 +42,6 @@
 
 </style>
 
-
 <p>
   <a href="/" class="button">Return Home</a>
 </p>
@@ -59,7 +58,7 @@
       <h2>Buggy Creation Redesigned</h2>
       <ul>
         <li>Sleak and intuitive interface with minimalist styling</li>
-        <li>Robust data entry with menus for specialist options</li>
+        <li>Robust data entry with drop-down menus for specialist options</li>
         <li>Form sub-categories for rapid navigation and auto-fill of default values</li>
         <li>Select Default or Random buggies for immediate submission</li>
         <li>Graphical flag colour selection to select your favourite or use the eyedropper tool</li>
@@ -119,9 +118,9 @@
 
 
 
-
 <section class="cs1999-tasks">
-
+  <h2>Task List Summary:</h2>
+  <hr>
   <div class="task">
     <h2>0-GET</h2>
     <p>
@@ -162,28 +161,28 @@
   <div class="task">
     <h2>1-TEMPLATE Add a new template to the app</h2>
     <p>
-      Added an info page template to the app, this includes an iframe that links to the server so it does not go out of date if the racing server is updated.
+      Added an info page template to the app, this includes an <code>iframe</code> that links to the server so it does not go out of date if the racing server is updated.
     </p>
     <p>
-      Initially I looked into webscraping this data with BeautifulSoup but it seemed like an excessive amount of effort for the desired effect. I then copied the original source code from the server in as a placeholder before replacing it with the iframe.
+      Initially I looked into web-scraping this data with BeautifulSoup but it seemed like an excessive amount of effort for the desired effect. I then copied the original source code from the server in as a placeholder before replacing it with the <code>iframe</code>.
     </p>
   </div>
   <div class="task">
     <h2>1-ADD Add more data to the form</h2>
     <p>
-      Added flag_color to the form
+      Added <code>flag_color</code> to the form
     </p>
     <p>
-      This was done beacue it already exisited in the database, ready for use.
+      This was done because it already existed in the database, ready for use.
     </p>
   </div>
   <div class="task">
     <h2>1-VALID Add basic data validation</h2>
     <p>
-      Added a simple statement to validate if the input for qty_wheels was a digit or not.
+      Added a simple statement to validate if the input for <code>qty_wheels</code> was a digit or not.
     </p>
     <p>
-      Also added in a flash message here to alert in the event of failure. Thie meant that the form page could be reloaded, rather than the update page displaying the fail and having to backtrack to fix it.
+      Also added in a flash message here to alert in the event of failure. This meant that the form page could be reloaded, rather than the update page displaying the fail and having to backtrack to fix it.
     </p>
   </div>
   <div class="task">
@@ -207,10 +206,10 @@
   <div class="task">
     <h2>2-FORM Make the form better</h2>
     <p>
-      Added in all the buggy attributes to the form.
+      Added in all the buggy attributes to the form, also added dropdown menus for all named fields to ensure valid entries and facilitate rapid form filling.
     </p>
     <p>
-      There are a lot of these! But as the races were not live at the time of writing, I wanted to ensure that the output of the app would result in a valid buggy that was ready for racing.
+      There are a lot of these! But as the races were not live at the time of writing, I wanted to ensure that the output of the app would result in a valid buggy that was ready for racing. The dropdown menus allow for pre-selected values, so the content of these was imported from the current buggy record. This works well but does mean that on first opening some items may be listed twice (ie. petrol, petrol, fusion, steam), but this does not alter its functionality.
     </p>
   </div>
   <div class="task">
@@ -219,73 +218,79 @@
       Imported costs from the racing server JSON API and added if statements to handle 0 cost where items were not used.
     </p>
     <p>
-      The JSON import ensures that any cost updates will be immediately reflected in the buggy editor. It also allows for a dictionary-type look up of each element.
+      The JSON import ensures that any cost updates will be immediately reflected in the buggy editor. It also allows for a dictionary-type look up of each element. Costs were also calculated by sub-category for ease of modification between race budgets.
     </p>
   </div>
   <div class="task">
     <h2>2-RULES Add validation according to the game rules</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Rules for the form data were added as if statements to ensure only valid entries were saved to buggies.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      Each error results in a flash message about it's content (ie. "Oops! Please enter at least 0 attacks. (qty_attacks)") giving an outline of the error and it's location. This was later updated so that all the <code>.isdigit </code>functions were in the same loop. An attempt was made to put the results of these errors into a function, but it was not possible to get the template to render form the return of these. 
     </p>
   </div>
   <div class="task">
     <h2>3-ENV Switch between dev and production environments</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Switched between the two environments successfully
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      Ran and tested both versions.
     </p>
   </div>
   <div class="task">
     <h2>3-AUTOFILL Add auto-fill to the edit forms</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Added buttons to the form that filled and submitted a buggy. Either a buggy with random values or one with default values.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      This route was taken as the form was already filled with default values upon opening (from 2-edit), it would have been great to have this functionality through javascript as you fill out the form, however, this was not possible in the time. Buttons allow for the records to be populated and submitted but as it's server side rather than client side, the values aren't visible until the buggy is view in the summary page. The random values have set lists for colours and numbers so that the <code>random.choice</code> function could be used, but these are not exhaustive.
     </p>
   </div>
   <div class="task">
     <h2>3-MULTI Allow different buggies to be created</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Added the functionality to allow for multiple buggies
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      This was done in association with the course videos. This code meant that the auto-fill no longer functioned as it needed to pass a None record into the buggy creation template. This was fixed by updating the init_db.py file to include a complete default buggy (not just 4-wheels), then calling this into the form. This did, however, mean that where there was a data validation error it would reset this ID to 0, modifying this default. So code was added to delete the id before loading the template for data validation. This would have been better in a function, but as above, the template render did not work. Additionally, the buggy ID is hidden from the user and automatically increments. This means that no numbers are skipped.
     </p>
   </div>
   <div class="task">
     <h2>3-DEL Allow buggies to be deleted</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Added the functionality to delete individual buggies
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      This was done in association with the course videos. Due to the fact that the buggy IDs increment automatically, if buggies 1,2,3 existed and 2 was deleted, and a new buggy was created, this would increment to 1,3,4. If more time was available then functionality to review the IDs in use and back fill any missing ones would be desirable.
     </p>
   </div>
   <div class="task">
     <h2>3-FLAG Display the pennant graphically</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Flag colours and patterns displayed within the buggy summary page, within a cell of the table.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      This was done through an if statement to determine the flag pattern style, then by selecting the correct table cell that featured the modified style of that pattern. The colours of the flag were pulled from the buggy record.
     </p>
   </div>
   <div class="task">
     <h2>3-TESTS Write some tests</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Manual walkthrough testing details are outlined in the testing.md document
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      Over the course of this task a large number of potential testing methods were attempted with the view to generating an automatic test set. This proved not to be possible within the remaining time. If more time were available then an automatic testing suite could be written in pytest or unittest generating a duplicate/test database and unit tests for each functional block of the application code and verification statements like <code>AssertTrue(x) </code> to determine a range of pass/fail criterions. For example, with the input of a dummy buggy record it would be possible to quickly test if the cost calculations, database and form were capable of functioning as anticipated. After this boarder/edge values could then be added to the trial to ensure greater stability. This may include a very large number of wheels, symbols or decimals.
     </p>
   </div>
 
 </section>
-
+<hr>
+<p>Thanks for reading! 
+  <br>
+  Sarah Haines 2022
+  <br>
+  END.
+</p>
 {% endblock %}
