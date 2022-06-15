@@ -14,28 +14,110 @@
   .cs1999-tasks .task h2 {
     border-bottom: 3px solid gray;
   }
+  img.one {
+  height: 90%;
+  width: 90%;
+  }
+  table, th, td {
+  border: 1px solid #232323 !important;
+  vertical-align: top;
+  }
+  a.button_two {
+    border: none;
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 0.25em;  
+    text-decoration: none;
+    background-color: #CCFF33;
+    color: #000000;
+    box-shadow: 5px 5px 5px #1a1a1a;
+  }
+  a.button:hover {
+    background-color: #000000;
+    color: #ffffff;
+  }
+  ul li { 
+    padding: 8px 0px; 
+  }
+
 </style>
 
-<!-- see tech note about the poster:  
-      https://rhul-cs-projects.github.io/CS1999-buggy-race-server/                -->
-<!--                                                                              -->
-<!-- anything you want here: make it beautiful! make it appealing! make it clear! -->
-<!-- you can drop images into static/assets if you want... and access them        -->
-<!-- here with <img src="/static/image-filename.png" alt="diagram" />             -->
 
 <p>
   <a href="/" class="button">Return Home</a>
 </p>
+<br>
+<!-- <hr>
+<br> -->
+<h1>Why Sarah's Buggy Editor?</h1>
+<p>Because it's great.</p>
+<hr>
+<br>
+<table>
+  <tr>
+    <td>
+      <h2>Buggy Creation Redesigned</h2>
+      <ul>
+        <li>Sleak and intuitive interface with minimalist styling</li>
+        <li>Robust data entry with menus for specialist options</li>
+        <li>Form sub-categories for rapid navigation and auto-fill of default values</li>
+        <li>Select Default or Random buggies for immediate submission</li>
+        <li>Graphical flag colour selection to select your favourite or use the eyedropper tool</li>
+        <li>Clear unwanted changes to quickly reset the form without compromising your buggy</li>
+        <li>Dynamic error feedback to identify content of invalid inputs</li>
+
+      </ul>
+      <br>
+      <a href="/new" class="button_two"><b>Try It Out!</b></a>
+      <br><br>
+    </td>
+    <td>
+
+      <img class="one" src="/static/newbuggy_small.png" alt="diagram" />
+      <br><br><br><br>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img class="one" src="/static/buggy_small.png" alt="diagram" />
+      <br><br><br><br>
+    </td>
+    <td>
+      <h2>Comprehensive Buggy Summary</h2>
+      <ul>
+        <li>Review the details of all buggies in one place</li>
+        <li>Costs grouped in sub-categories for quick reference</li>
+        <li>Visual representation of flag combinations</li>
+        <li>See an issue? Link directly from here to edit or delete the buggy</li>
+        <li>Love it? Link directly from here to get the buggy JSON and get racing!</li>
+      </ul>
+      <br>
+      <a href="/buggy" class="button_two"><b>Try It Out!</b></a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h2>Ready to Race?</h2>
+      <ul>
+        <li>Select your chosen buggy and export the JSON data and proceed to the racing server</li>
+        <br>
+          <a href="/json" class="button_two"><b>Try It Out!</b></a>
+          <br>
+          <br>
+          <br>
+          <li>Never be left behind with the live server page featuring race specifications and rules</li>
+        <br>
+          <a href="/info" class="button_two"><b>Try It Out!</b></a>
+      </ul>
+      
+    </td>
+    <td>
+      <img class="one" src="/static/getjson_small.png" alt="diagram" />
+    </td>
+  </tr>
+</table>
 
 
-<h1>What is a Buggy Editor</h1>
-
-<div class="task">
-  <p>
-    This buggy editor 
-  </p>
-  
-</div>
 
 
 <section class="cs1999-tasks">
@@ -47,7 +129,7 @@
     </p>
     <p>
       Once the repo was on my own machine I was able to commit changes to version control
-      as I went along, and I pushed back up to my GitHub repo at the end of each day.
+      as I went along, and I pushed back up to my GitHub repo at the end of each task.
       I followed GitHub's instructions and set up a SSH key so I didn't need to enter
       username and password every time I pushed.
     </p>
@@ -56,91 +138,88 @@
   <div class="task">
     <h2>0-GET Get the source code</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Logging into the buggy server, VSCode and then GitHub allowed for automatic population of the required files.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      This task required starting from scratch- setting up a Github account, downloading and navigating VSCode for the first time.
     </p>
   </div>
   <div class="task">
     <h2>0-RUN Get app running and view it in a browser</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
-    </p>
-    <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      Opened VSCode workspace, successfully ran the app.py code and opened the server link.
     </p>
   </div>
   <div class="task">
     <h2>0-CHANGE Make a change to a template and see it appear</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Altered the heading of the Index page and witnessed the update in the live page.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      Changed this to "Sarah's Buggy Editor".
     </p>
   </div>
   <div class="task">
     <h2>1-TEMPLATE Add a new template to the app</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Added an info page template to the app, this includes an iframe that links to the server so it does not go out of date if the racing server is updated.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      Initially I looked into webscraping this data with BeautifulSoup but it seemed like an excessive amount of effort for the desired effect. I then copied the original source code from the server in as a placeholder before replacing it with the iframe.
     </p>
   </div>
   <div class="task">
     <h2>1-ADD Add more data to the form</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Added flag_color to the form
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      This was done beacue it already exisited in the database, ready for use.
     </p>
   </div>
   <div class="task">
     <h2>1-VALID Add basic data validation</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Added a simple statement to validate if the input for qty_wheels was a digit or not.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      Also added in a flash message here to alert in the event of failure. Thie meant that the form page could be reloaded, rather than the update page displaying the fail and having to backtrack to fix it.
     </p>
   </div>
   <div class="task">
     <h2>1-STYLE Style your editor just how you like it</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Basic updates to the app style were made, particularly around the colour selections and font.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      A minimalist, high contrast style was selected for this task.
     </p>
   </div>
   <div class="task">
     <h2>2-EDIT Edit the record by loading its current values into the form</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Added the current values into the form and rendered the template with these in place
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      This was done by reusing the SQL code for fetching the record from app.py and placing it in the GET method then rendering the template with this as the data
     </p>
   </div>
   <div class="task">
     <h2>2-FORM Make the form better</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Added in all the buggy attributes to the form.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      There are a lot of these! But as the races were not live at the time of writing, I wanted to ensure that the output of the app would result in a valid buggy that was ready for racing.
     </p>
   </div>
   <div class="task">
     <h2>2-COST Calculate and save the game cost of the buggy</h2>
     <p>
-      <!-- sentence on _how_ you fixed it -->
+      Imported costs from the racing server JSON API and added if statements to handle 0 cost where items were not used.
     </p>
     <p>
-      <!-- sentence(s) on anything interesting/incomplete you did -->
+      The JSON import ensures that any cost updates will be immediately reflected in the buggy editor. It also allows for a dictionary-type look up of each element.
     </p>
   </div>
   <div class="task">

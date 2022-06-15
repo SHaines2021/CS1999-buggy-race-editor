@@ -40,7 +40,8 @@ def poster():
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
     #url for the buggy race server's json API that gives all the buggy spec variables. Also includes a user-agent header to prevent blocking by the server security 
-    url = Request("https://rhul.buggyrace.net/specs/data/types.json", headers={'User-Agent': 'Mozilla/5.0'})
+    url = "https://rhul.buggyrace.net/specs/data/types.json"
+    # url = Request("https://rhul.buggyrace.net/specs/data/types.json", headers={'User-Agent': 'Mozilla/5.0'})
     #open the page 
     response = urlopen(url)
     #load the json from the read page. This variable will be used extensively for referencing individual specifications
